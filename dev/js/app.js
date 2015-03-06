@@ -14,6 +14,11 @@ var app = angular.module('travelwishlist', ['ngRoute','ngSanitize', 'firebase'])
             controller: 'login'
         })
 
+        .when('/register', {
+            templateUrl: '/ng-views/register.html',
+            controller: 'register'
+        })
+
         .when('/map', {
         	templateUrl: '/ng-views/map.html',
         	controller: 'map'

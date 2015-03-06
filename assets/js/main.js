@@ -27860,6 +27860,11 @@ var app = angular.module('travelwishlist', ['ngRoute','ngSanitize', 'firebase'])
             controller: 'login'
         })
 
+        .when('/register', {
+            templateUrl: '/ng-views/register.html',
+            controller: 'register'
+        })
+
         .when('/map', {
         	templateUrl: '/ng-views/map.html',
         	controller: 'map'
@@ -27891,8 +27896,8 @@ var app = angular.module('travelwishlist', ['ngRoute','ngSanitize', 'firebase'])
   .controller('home', ['$scope', '$http', '$firebase', function($scope, $http, $firebase) {
       
       // Init Firebase
-      var ref  =  new Firebase("https://travel-wishlist.firebaseio.com/"),
-          sync =  $firebase(ref);
+      var firebaseObj  =  new Firebase("https://travel-wishlist.firebaseio.com/"),
+          sync         =  $firebase(firebaseObj);
 
       // Scope variables
       $scope.field = "";
@@ -27901,7 +27906,7 @@ var app = angular.module('travelwishlist', ['ngRoute','ngSanitize', 'firebase'])
       // Create new entry in Firebase
       $scope.setNewEntry = function(val) {
 
-        ref.child("places").push({
+        firebaseObj.child("places").push({
 
           "location": val
 
@@ -27917,7 +27922,7 @@ var app = angular.module('travelwishlist', ['ngRoute','ngSanitize', 'firebase'])
 
         if (confirm('Are you sure you want to remove this location?')) {
 
-            ref.child("places").remove(val)
+            firebaseObj.child("places").remove(val)
 
         }         
 
@@ -27927,8 +27932,24 @@ var app = angular.module('travelwishlist', ['ngRoute','ngSanitize', 'firebase'])
 
   .controller('login', ['$scope', '$http', '$firebase', function($scope, $http, $firebase) {
       
-      var username = $scope.user.email,
-          password = $scope.user.password,
-          ref      =  new Firebase("https://travel-wishlist.firebaseio.com/");
+      var firebaseObj =  new Firebase("https://travel-wishlist.firebaseio.com/");
+
+  }])
+
+
+  .controller('register', ['$scope', '$http', '$firebase', function($scope, $http, $firebase) {
+      
+      var firebaseObj =  new Firebase("https://travel-wishlist.firebaseio.com/");
+
+      firebaseObj.createUser({
+        email    : "bobtony@firebase.com",
+        password : "correcthorsebatterystaple"
+      }, function(error, userData) {
+        if (error) {
+          console.log("Error creating user:", error);
+        } else {
+          console.log("Successfully created user account with uid:", userData.uid);
+        }
+      });
 
   }])
