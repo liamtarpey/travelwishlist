@@ -1,0 +1,43 @@
+// ============================================================
+// HEADER 
+// ============================================================
+
+.app-header {
+
+	width: 20%;
+	background: $col-lightgrey;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+
+	nav {
+
+		ul {
+
+			li {
+
+				border-bottom: 1px solid $col-grey;
+
+				a {
+
+					display: block;
+					padding: $baseline;
+
+					&:hover {
+
+						text-decoration: none;
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+// ============================================================
