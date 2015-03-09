@@ -610,32 +610,28 @@ em {
   font-style: italic;
 }
 
-/* line 5, ../../dev/sass/partials/modules/_app-header.scss */
-.app-header {
+/* line 13, ../../dev/sass/partials/modules/_app-main.scss */
+.app-main .sidebar {
   width: 20%;
-  background: #e6e6e6;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
-}
-/* line 18, ../../dev/sass/partials/modules/_app-header.scss */
-.app-header nav ul li {
-  border-bottom: 1px solid #c9c9c9;
-}
-/* line 22, ../../dev/sass/partials/modules/_app-header.scss */
-.app-header nav ul li a {
-  display: block;
+  background: #e6e6e6;
   padding: 24px;
+  z-index: 111;
 }
-/* line 27, ../../dev/sass/partials/modules/_app-header.scss */
-.app-header nav ul li a:hover {
-  text-decoration: none;
+/* line 26, ../../dev/sass/partials/modules/_app-main.scss */
+.app-main #map {
+  z-index: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
-
-/* line 5, ../../dev/sass/partials/modules/_app-main.scss */
-.app-main {
-  padding: 48px 0 48px 24%;
+/* line 33, ../../dev/sass/partials/modules/_app-main.scss */
+.app-main #map .angular-google-map-container {
+  width: 600px;
+  height: 400px;
 }
 
 /* line 7, ../../dev/views/home/_home.scss */

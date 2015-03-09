@@ -1,15 +1,15 @@
-var app = angular.module('travelwishlist', ['ngRoute','ngSanitize', 'firebase'])
+var app = angular.module('travelwishlist', ['ngRoute','ngSanitize', 'firebase', 'uiGmapgoogle-maps'])
 
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
  	
  	$routeProvider
 
-        // .when('/', {
-        // 	templateUrl: '/ng-views/home.html',
-        // 	controller: 'home'
-        // })
-
         .when('/', {
+        	templateUrl: '/ng-views/home.html',
+        	controller: 'home'
+        })
+
+        .when('/login', {
             templateUrl: '/ng-views/login.html',
             controller: 'login'
         })

@@ -9,6 +9,11 @@
       $scope.field = "";
       $scope.data  = sync.$asObject();
 
+
+    // ==========
+    // Sidebar 
+    // =========
+
       // Create new entry in Firebase
       $scope.setNewEntry = function(val) {
 
@@ -33,5 +38,11 @@
         }         
 
       }
+
+    // =======
+    // Map
+    // =======
+    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+
 
   }])

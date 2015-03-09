@@ -25,6 +25,8 @@ module.exports = function(grunt) {
                     'dev/js/libs/angular-sanitize.js',
                     'dev/js/libs/firebase.js',
                     'dev/js/libs/angular-fire.js',
+                    'dev/js/libs/lodash.js',
+                    'dev/js/libs/angular-googlemaps.js',
                     //'dev/js/libs/angular-touch.js',
                     //'dev/js/libs/angular-animate.js',
                     //'dev/js/libs/angular-messages.js',

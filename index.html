@@ -15,7 +15,7 @@
             <p class="browsehappy">Please don't use IE8</p>
         <![endif]-->
 
-        <header class="app-header">
+        <!-- <header class="app-header" ng-if="auth.user!==null">
             <a href="/">Travel Wishlist</a>
             <nav>
                 <ul>
@@ -24,12 +24,12 @@
                 </ul>
             </nav>
         </header>
-
+ -->
         <main class="app-main">
             <ng-view></ng-view>
         </main>
 
-        <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+        <script src="//maps.googleapis.com/maps/api/js?libraries=places"></script>
         <script src="assets/js/main.js"></script>
         <script src="//localhost:35729/livereload.js"></script>
 

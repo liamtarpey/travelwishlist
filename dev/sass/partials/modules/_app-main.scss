@@ -2,9 +2,47 @@
 // Main 
 // ============================================================
 
+// .app-main {
+
+// 	padding:  $baseline*2 0 $baseline*2 24%;
+
+// }
+
 .app-main {
 
-	padding:  $baseline*2 0 $baseline*2 24%;
+	.sidebar {
+
+		width: 20%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		background: $col-lightgrey;
+		padding: $baseline;
+		z-index: 111;
+
+	}
+
+	#map {
+
+		z-index: 1;
+		position: relative;
+		width: 100%;
+		height: 100%;
+
+		.angular-google-map-container {
+
+			width: 600px;
+			height: 400px;
+			// position: absolute;
+			// top: 0;
+			// left: 0;
+			// right: 0;
+			// bottom: 0;
+
+		}
+
+	}
 
 }
 
