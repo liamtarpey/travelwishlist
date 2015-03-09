@@ -39514,6 +39514,12 @@ var app = angular.module('travelwishlist', ['ngRoute','ngSanitize', 'firebase', 
       $scope.data  = sync.$asObject();
 
 
+    // =======
+    // Map
+    // =======
+    $scope.map = { center: { latitude: 36.1667, longitude: -86.7833 }, zoom: 8 };
+
+
     // ==========
     // Sidebar 
     // =========
@@ -39543,10 +39549,7 @@ var app = angular.module('travelwishlist', ['ngRoute','ngSanitize', 'firebase', 
 
       }
 
-    // =======
-    // Map
-    // =======
-    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+
 
 
   }])

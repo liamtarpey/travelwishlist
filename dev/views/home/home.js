@@ -10,6 +10,12 @@
       $scope.data  = sync.$asObject();
 
 
+    // =======
+    // Map
+    // =======
+    $scope.map = { center: { latitude: 36.1667, longitude: -86.7833 }, zoom: 8 };
+
+
     // ==========
     // Sidebar 
     // =========
@@ -39,10 +45,7 @@
 
       }
 
-    // =======
-    // Map
-    // =======
-    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+
 
 
   }])
