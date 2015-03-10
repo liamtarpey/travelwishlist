@@ -1,0 +1,12 @@
+<div class="sidebar">
+    <form ng-submit="setNewEntry(field)">
+        <input type="text" googleplace ng-model="field" />
+    </form>
+
+    <ul class="places">
+        <li ng-repeat="place in data.places | orderBy: place.location">
+            <span ng-bind-html="place.location"></span>
+            <a ng-href="javascript:;" class="remove-place" ng-click="removeEntry()">X</a>
+        </li>
+    </ul>
+</div>

@@ -8,28 +8,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon"/> -->
         <link rel="stylesheet" href="assets/css/styles.css"/>
+
+        <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+
     </head>
     <body>
 
-        <!--[if lt IE 8]>
-            <p class="browsehappy">Please don't use IE8</p>
-        <![endif]-->
-
-        <!-- <header class="app-header" ng-if="auth.user!==null">
-            <a href="/">Travel Wishlist</a>
-            <nav>
-                <ul>
-                    <li><a href="/">Search</a></li>
-                    <li><a href="/map">Map</a></li>
-                </ul>
-            </nav>
-        </header>
- -->
         <main class="app-main">
-            <ng-view></ng-view>
+
+           <!-- Logged in view -->
+            <section class="logged-in" ng-if="auth.user !== null" ng-controller="main">
+                <div ng-include="'/includes/sidebar.html'"></div>
+                <div id="map"></div>
+            </section>
+
+            <!-- Logged out view -->
+            <section class="logged-out" ng-if="auth.user === null" ng-controller="auth">
+                <div ng-include="'/includes/auth.html'"></div>
+            </section>   
+
         </main>
 
-        <script src="//maps.googleapis.com/maps/api/js?libraries=places"></script>
         <script src="assets/js/main.js"></script>
         <script src="//localhost:35729/livereload.js"></script>
 

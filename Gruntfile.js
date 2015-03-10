@@ -21,21 +21,17 @@ module.exports = function(grunt) {
             dist: {
                 src: [
                     'dev/js/libs/angular.js',
-                    'dev/js/libs/angular-route.js',
                     'dev/js/libs/angular-sanitize.js',
                     'dev/js/libs/firebase.js',
                     'dev/js/libs/angular-fire.js',
-                    'dev/js/libs/lodash.js',
-                    'dev/js/libs/angular-googlemaps.js',
                     //'dev/js/libs/angular-touch.js',
                     //'dev/js/libs/angular-animate.js',
                     //'dev/js/libs/angular-messages.js',
                     'dev/js/libs/modernizr.js',
                     'dev/js/app.js',
+                    'dev/js/services/*.js',
                     'dev/js/directives/*.js',
-                    'dev/js/factories/*.js',
-                    'dev/views/**/*.js'
-                    //'dev/js/**/*.js'
+                    'dev/modules/**/*.js'
                 ],
                 dest: 'assets/js/main.js',
             }
@@ -62,7 +58,7 @@ module.exports = function(grunt) {
             scripts: {
                 files: [
                     'dev/js/**/*.js',
-                    'dev/views/**/*.js'
+                    'dev/modules/**/*.js'
                 ],
                 tasks: ['concat', 'uglify'],
                 options: {
@@ -102,11 +98,11 @@ module.exports = function(grunt) {
             main: {
                 expand: true, 
                 flatten: true,
-                cwd: 'dev/views', 
+                cwd: 'dev/modules', 
                 src: [
                     '**/*.html'
                     ], 
-                dest: 'ng-views/', 
+                dest: 'includes/', 
                 filter: 'isFile'
             }
         },
