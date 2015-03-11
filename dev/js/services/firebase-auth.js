@@ -1,6 +1,10 @@
 
-	.service('authService', function(fBaseUrl) {
+	.factory('authService', function(fBaseUrl) {
 
-  		var firebaseRef  =  new Firebase(fBaseUrl);
+		return {
+
+			firebaseRef : new Firebase(fBaseUrl)
+
+		}  		
 
 	})

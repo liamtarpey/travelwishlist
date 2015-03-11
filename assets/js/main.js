@@ -26963,30 +26963,35 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
 	    
 	}])
 
-	.service('authService', function(fBaseUrl) {
+	.factory('authService', function(fBaseUrl) {
 
-  		var firebaseRef  =  new Firebase(fBaseUrl);
+		return {
+
+			firebaseRef : new Firebase(fBaseUrl)
+
+		}  		
 
 	})
 
-	.directive('addToFirebase', function() {
+	.directive('addToFirebase', function(authService) {
 
 		return {
 
 			scope : {
+
 	        	name : '=addToFirebase'
+
 	        },
 	        
 	    	link: function(scope, ele, attr) {
 
 	        	ele.bind('click', function() {
 
-	        		console.log(scope.name)
+	       			authService.firebaseRef.child("places").push({
 
-	        		// Will need to run firebase in auth service before this will work
-	       			// firebaseRef.child("places").push({
-				    // 	"location": val
-				    // })
+				    	"location": scope.name
+
+				    })
 
 	        	})
 
@@ -27117,17 +27122,20 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
                      '$http', 
                      'authService', 
                      'api',
+                     '$firebaseObject',
                      'fBaseUrl', 
                      'mapBoxToken', 
                      'fourSquareBase',
                      'geolocation',
-                     function($scope, $http, authService, api, fBaseUrl, mapBoxToken, fourSquareBase, geolocation) {
+                     function($scope, $http, authService, api, $firebaseObject, fBaseUrl, mapBoxToken, fourSquareBase, geolocation) {
     
 
   // Variables
   $scope.field         = "";
   L.mapbox.accessToken = mapBoxToken
 
+  
+  //$scope.data = $firebaseObject(authService.firebaseRef)
 
 
   // Map - uses geolocation API

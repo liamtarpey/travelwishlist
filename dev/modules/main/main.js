@@ -3,17 +3,20 @@
                      '$http', 
                      'authService', 
                      'api',
+                     '$firebaseObject',
                      'fBaseUrl', 
                      'mapBoxToken', 
                      'fourSquareBase',
                      'geolocation',
-                     function($scope, $http, authService, api, fBaseUrl, mapBoxToken, fourSquareBase, geolocation) {
+                     function($scope, $http, authService, api, $firebaseObject, fBaseUrl, mapBoxToken, fourSquareBase, geolocation) {
     
 
   // Variables
   $scope.field         = "";
   L.mapbox.accessToken = mapBoxToken
 
+  
+  //$scope.data = $firebaseObject(authService.firebaseRef)
 
 
   // Map - uses geolocation API
