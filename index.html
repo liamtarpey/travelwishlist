@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en-GB" ng-app="travelwishlist">
+<html class="no-js" lang="en-GB" ng-app="travelWishlist">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,8 +28,14 @@
                 <div ng-include="'/includes/auth.html'"></div>
             </section>   
 
+            <div style="display:none">
+                
+            </div>
+            <div id="google-map"></div>
+
         </main>
 
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
         <script src="assets/js/main.js"></script>
         <script src="//localhost:35729/livereload.js"></script>
 

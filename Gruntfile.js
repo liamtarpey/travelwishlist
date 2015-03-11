@@ -24,6 +24,7 @@ module.exports = function(grunt) {
                     'dev/js/libs/angular-sanitize.js',
                     'dev/js/libs/firebase.js',
                     'dev/js/libs/angular-fire.js',
+                    'dev/js/libs/angular-geolocation.js',
                     //'dev/js/libs/angular-touch.js',
                     //'dev/js/libs/angular-animate.js',
                     //'dev/js/libs/angular-messages.js',
@@ -80,7 +81,7 @@ module.exports = function(grunt) {
                     livereload: true
                 },
                 files: [
-                    'ng-views/**/*.html',
+                    'dev/modules/**/*.html',
                     'dev/js/**/*.js',
                     'dev/sass/**/*.scss',
                     'assets/**/*'
@@ -88,7 +89,7 @@ module.exports = function(grunt) {
             },
             html: {
                 files: [
-                    'dev/views/**/*.html'
+                    'dev/modules/**/*.html'
                 ],
                 tasks: ['copy']
             }

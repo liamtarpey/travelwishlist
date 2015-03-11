@@ -26844,18 +26844,131 @@ function nb(a,b){y(!b||!0===a||!1===a,"Can't turn on custom loggers persistently
  * MIT LICENSE: http://firebase.mit-license.org/
  */
 !function(a){"use strict";angular.module("firebase",[]).value("Firebase",a.Firebase).value("firebaseBatchDelay",50)}(window),function(){"use strict";angular.module("firebase").factory("$FirebaseArray",["$log","$firebaseUtils",function(a,b){function c(a,c,d){var e=this;return this._observers=[],this.$list=[],this._inst=a,this._promise=d,this._destroyFn=c,b.getPublicMethods(e,function(a,b){e.$list[b]=a.bind(e)}),this.$list}return c.prototype={$add:function(a){return this._assertNotDestroyed("$add"),this.$inst().$push(a)},$save:function(a){this._assertNotDestroyed("$save");var c=this._resolveItem(a),d=this.$keyAt(c);return null!==d?this.$inst().$set(d,b.toJSON(c)):b.reject("Invalid record; could determine its key: "+a)},$remove:function(a){this._assertNotDestroyed("$remove");var c=this.$keyAt(a);return null!==c?this.$inst().$remove(c):b.reject("Invalid record; could not find key: "+a)},$keyAt:function(a){var b=this._resolveItem(a);return this._getKey(b)},$indexFor:function(a){var b=this;return this.$list.findIndex(function(c){return b._getKey(c)===a})},$loaded:function(a,b){var c=this._promise;return arguments.length&&(c=c.then.call(c,a,b)),c},$inst:function(){return this._inst},$watch:function(a,b){var c=this._observers;return c.push([a,b]),function(){var d=c.findIndex(function(c){return c[0]===a&&c[1]===b});d>-1&&c.splice(d,1)}},$destroy:function(b){this._isDestroyed||(this._isDestroyed=!0,this.$list.length=0,a.debug("destroy called for FirebaseArray: "+this.$inst().$ref().toString()),this._destroyFn(b))},$getRecord:function(a){var b=this.$indexFor(a);return b>-1?this.$list[b]:null},$$added:function(a,b){var c=this.$indexFor(a.name());if(-1===c){var d=a.val();angular.isObject(d)||(d={$value:d}),d.$id=a.name(),d.$priority=a.getPriority(),this._process("child_added",d,b)}},$$removed:function(a){var b=this.$getRecord(a.name());angular.isObject(b)&&this._process("child_removed",b)},$$updated:function(a){var c=this.$getRecord(a.name());if(angular.isObject(c)){var d=b.updateRec(c,a);d&&this._process("child_changed",c)}},$$moved:function(a,b){var c=this.$getRecord(a.name());angular.isObject(c)&&(c.$priority=a.getPriority(),this._process("child_moved",c,b))},$$error:function(b){a.error(b),this.$destroy(b)},_getKey:function(a){return angular.isObject(a)?a.$id:null},_process:function(a,b,c){var d,e=this._getKey(b),f=!1;switch(a){case"child_added":d=this.$indexFor(e);break;case"child_moved":d=this.$indexFor(e),this._spliceOut(e);break;case"child_removed":f=null!==this._spliceOut(e);break;case"child_changed":f=!0}return angular.isDefined(d)&&(f=this._addAfter(b,c)!==d),f&&this._notify(a,e,c),f},_notify:function(a,b,c){var d={event:a,key:b};angular.isDefined(c)&&(d.prevChild=c),angular.forEach(this._observers,function(a){a[0].call(a[1],d)})},_addAfter:function(a,b){var c;return null===b?c=0:(c=this.$indexFor(b)+1,0===c&&(c=this.$list.length)),this.$list.splice(c,0,a),c},_spliceOut:function(a){var b=this.$indexFor(a);return b>-1?this.$list.splice(b,1)[0]:null},_resolveItem:function(a){var b=this.$list;if(angular.isNumber(a)&&a>=0&&b.length>=a)return b[a];if(angular.isObject(a))for(var c=b.length;c--;)if(b[c]===a)return a;return null},_assertNotDestroyed:function(a){if(this._isDestroyed)throw new Error("Cannot call "+a+" method on a destroyed $FirebaseArray object")}},c.$extendFactory=function(a,d){return 1===arguments.length&&angular.isObject(a)&&(d=a,a=function(){return c.apply(this,arguments)}),b.inherit(a,c,d)},c}])}(),function(){"use strict";angular.module("firebase").factory("$FirebaseObject",["$parse","$firebaseUtils","$log",function(a,b,c){function d(a,b,c){var d=this;d.$$conf={promise:c,inst:a,bound:null,destroyFn:b,listeners:[],notify:function(){d.$$conf.bound&&d.$$conf.bound.update(),angular.forEach(d.$$conf.listeners,function(a){a[0].call(a[1],{event:"updated",key:d.$id})})}},d.$id=a.$ref().name(),d.$priority=null}return d.prototype={$save:function(){return this.$inst().$set(b.toJSON(this))},$loaded:function(a,b){var c=this.$$conf.promise;return arguments.length&&(c=c.then.call(c,a,b)),c},$inst:function(){return this.$$conf.inst},$bindTo:function(d,e){var f=this;return f.$loaded().then(function(){if(f.$$conf.bound)return c.error("Can only bind to one scope variable at a time"),b.reject("Can only bind to one scope variable at a time");var g=function(){f.$$conf.bound&&(f.$$conf.bound=null,j())},h=a(e),i=f.$$conf.bound={update:function(){var a=b.parseScopeData(f);h.assign(d,a)},get:function(){return h(d)},unbind:g};i.update(),d.$on("$destroy",i.unbind);var j=d.$watch(e,function(){var a=b.toJSON(i.get());f.$inst().$set(a)},!0);return g})},$watch:function(a,b){var c=this.$$conf.listeners;return c.push([a,b]),function(){var d=c.findIndex(function(c){return c[0]===a&&c[1]===b});d>-1&&c.splice(d,1)}},$destroy:function(a){var c=this;c.$isDestroyed||(c.$isDestroyed=!0,c.$$conf.bound&&c.$$conf.bound.unbind(),b.each(c,function(a,b){delete c[b]}),c.$$conf.destroyFn(a))},$$updated:function(a){var c=b.updateRec(this,a);this.$id=a.name(),c&&this.$$conf.notify()},$$error:function(a){c.error(a),this.$destroy(a)}},d.$extendFactory=function(a,c){return 1===arguments.length&&angular.isObject(a)&&(c=a,a=function(){d.apply(this,arguments)}),b.inherit(a,d,c)},d}])}(),function(){"use strict";angular.module("firebase").factory("$firebase",["$firebaseUtils","$firebaseConfig",function(a,b){function c(a,d){return this instanceof c?(this._config=b(d),this._ref=a,this._arraySync=null,this._objectSync=null,void this._assertValidConfig(a,this._config)):new c(a,d)}function d(b,c){function d(a){q.isDestroyed=!0;var c=b.$ref();c.off("child_added",k),c.off("child_moved",m),c.off("child_changed",l),c.off("child_removed",n),i=null,p(a||"destroyed")}function e(){var a=b.$ref();a.on("child_added",k,o),a.on("child_moved",m,o),a.on("child_changed",l,o),a.on("child_removed",n,o),a.once("value",function(){p(null)},p)}function f(a){h&&(a?h.reject(a):h.resolve(i),h=null)}function g(a){if(!angular.isArray(a)){var b=Object.prototype.toString.call(a);throw new Error('arrayFactory must return a valid array that passes angular.isArray and Array.isArray, but received "'+b+'"')}}var h=a.defer(),i=new c(b,d,h.promise),j=a.batch(),k=j(i.$$added,i),l=j(i.$$updated,i),m=j(i.$$moved,i),n=j(i.$$removed,i),o=j(i.$$error,i),p=j(f),q=this;q.isDestroyed=!1,q.getArray=function(){return i},g(i),e()}function e(b,c){function d(a){n.isDestroyed=!0,i.off("value",k),h=null,m(a||"destroyed")}function e(){i.on("value",k,l),i.once("value",function(){m(null)},m)}function f(a){g&&(a?g.reject(a):g.resolve(h),g=null)}var g=a.defer(),h=new c(b,d,g.promise),i=b.$ref(),j=a.batch(),k=j(h.$$updated,h),l=j(h.$$error,h),m=j(f),n=this;n.isDestroyed=!1,n.getObject=function(){return h},e()}return c.prototype={$ref:function(){return this._ref},$push:function(b){var c=a.defer(),d=this._ref.ref().push(),e=this._handle(c,d);return arguments.length>0?d.set(b,e):e(),c.promise},$set:function(b,c){var d=this._ref,e=a.defer();if(arguments.length>1?d=d.ref().child(b):c=b,angular.isFunction(d.set)||!angular.isObject(c))d.ref().set(c,this._handle(e,d));else{var f=angular.extend({},c);d.once("value",function(a){a.forEach(function(a){f.hasOwnProperty(a.name())||(f[a.name()]=null)}),d.ref().update(f,this._handle(e,d))},this)}return e.promise},$remove:function(b){var c=this._ref,d=this;arguments.length>0&&(c=c.ref().child(b));var e=a.defer();if(angular.isFunction(c.remove))c.remove(d._handle(e,c));else{var f=[];c.once("value",function(b){b.forEach(function(b){var c=a.defer();f.push(c),b.ref().remove(d._handle(c,b.ref()))},d)}),d._handle(a.allPromises(f),c)}return e.promise},$update:function(b,c){var d=this._ref.ref(),e=a.defer();return arguments.length>1?d=d.child(b):c=b,d.update(c,this._handle(e,d)),e.promise},$transaction:function(b,c,d){var e=this._ref.ref();angular.isFunction(b)?(d=c,c=b):e=e.child(b),d=!!d;var f=a.defer();return e.transaction(c,function(a,b,c){a?f.reject(a):f.resolve(b?c:null)},d),f.promise},$asObject:function(){return(!this._objectSync||this._objectSync.isDestroyed)&&(this._objectSync=new e(this,this._config.objectFactory)),this._objectSync.getObject()},$asArray:function(){return(!this._arraySync||this._arraySync.isDestroyed)&&(this._arraySync=new d(this,this._config.arrayFactory)),this._arraySync.getArray()},_handle:function(a){var b=Array.prototype.slice.call(arguments,1);return function(c){c?a.reject(c):a.resolve.apply(a,b)}},_assertValidConfig:function(b,c){if(a.assertValidRef(b,"Must pass a valid Firebase reference to $firebase (not a string or URL)"),!angular.isFunction(c.arrayFactory))throw new Error("config.arrayFactory must be a valid function");if(!angular.isFunction(c.objectFactory))throw new Error("config.arrayFactory must be a valid function")}},c}])}(),function(){"use strict";var a;angular.module("firebase").factory("$firebaseSimpleLogin",["$q","$timeout","$rootScope",function(b,c,d){return function(e){var f=new a(b,c,d,e);return f.construct()}}]),a=function(a,b,c,d){if(this._q=a,this._timeout=b,this._rootScope=c,this._loginDeferred=null,this._getCurrentUserDeferred=[],this._currentUserData=void 0,"string"==typeof d)throw new Error("Please provide a Firebase reference instead of a URL, eg: new Firebase(url)");this._fRef=d},a.prototype={construct:function(){var a={user:null,$login:this.login.bind(this),$logout:this.logout.bind(this),$createUser:this.createUser.bind(this),$changePassword:this.changePassword.bind(this),$removeUser:this.removeUser.bind(this),$getCurrentUser:this.getCurrentUser.bind(this),$sendPasswordResetEmail:this.sendPasswordResetEmail.bind(this)};if(this._object=a,!window.FirebaseSimpleLogin){var b=new Error("FirebaseSimpleLogin is undefined. Did you forget to include firebase-simple-login.js?");throw this._rootScope.$broadcast("$firebaseSimpleLogin:error",b),b}var c=new FirebaseSimpleLogin(this._fRef,this._onLoginEvent.bind(this));return this._authClient=c,this._object},login:function(a,b){var c=this._q.defer(),d=this;return this.getCurrentUser().then(function(){d._loginDeferred=c,d._authClient.login(a,b)}),c.promise},logout:function(){this._authClient.logout(),delete this._currentUserData},createUser:function(a,b){var c=this,d=this._q.defer();return c._authClient.createUser(a,b,function(a,b){a?(c._rootScope.$broadcast("$firebaseSimpleLogin:error",a),d.reject(a)):d.resolve(b)}),d.promise},changePassword:function(a,b,c){var d=this,e=this._q.defer();return d._authClient.changePassword(a,b,c,function(a){a?(d._rootScope.$broadcast("$firebaseSimpleLogin:error",a),e.reject(a)):e.resolve()}),e.promise},getCurrentUser:function(){var a=this,b=this._q.defer();return void 0!==a._currentUserData?b.resolve(a._currentUserData):a._getCurrentUserDeferred.push(b),b.promise},removeUser:function(a,b){var c=this,d=this._q.defer();return c._authClient.removeUser(a,b,function(a){a?(c._rootScope.$broadcast("$firebaseSimpleLogin:error",a),d.reject(a)):d.resolve()}),d.promise},sendPasswordResetEmail:function(a){var b=this,c=this._q.defer();return b._authClient.sendPasswordResetEmail(a,function(a){a?(b._rootScope.$broadcast("$firebaseSimpleLogin:error",a),c.reject(a)):c.resolve()}),c.promise},_onLoginEvent:function(a,b){if(this._currentUserData!==b||null!==a){var c=this;a?(c._loginDeferred&&(c._loginDeferred.reject(a),c._loginDeferred=null),c._rootScope.$broadcast("$firebaseSimpleLogin:error",a)):(this._currentUserData=b,c._timeout(function(){for(c._object.user=b,b?c._rootScope.$broadcast("$firebaseSimpleLogin:login",b):c._rootScope.$broadcast("$firebaseSimpleLogin:logout"),c._loginDeferred&&(c._loginDeferred.resolve(b),c._loginDeferred=null);c._getCurrentUserDeferred.length>0;){var a=c._getCurrentUserDeferred.pop();a.resolve(b)}}))}}}}(),Array.prototype.indexOf||(Array.prototype.indexOf=function(a,b){if(void 0===this||null===this)throw new TypeError("'this' is null or not defined");var c=this.length>>>0;for(b=+b||0,1/0===Math.abs(b)&&(b=0),0>b&&(b+=c,0>b&&(b=0));c>b;b++)if(this[b]===a)return b;return-1}),Function.prototype.bind||(Function.prototype.bind=function(a){if("function"!=typeof this)throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");var b=Array.prototype.slice.call(arguments,1),c=this,d=function(){},e=function(){return c.apply(this instanceof d&&a?this:a,b.concat(Array.prototype.slice.call(arguments)))};return d.prototype=this.prototype,e.prototype=new d,e}),Array.prototype.findIndex||Object.defineProperty(Array.prototype,"findIndex",{enumerable:!1,configurable:!0,writable:!0,value:function(a){if(null==this)throw new TypeError("Array.prototype.find called on null or undefined");if("function"!=typeof a)throw new TypeError("predicate must be a function");for(var b,c=Object(this),d=c.length>>>0,e=arguments[1],f=0;d>f;f++)if(f in c&&(b=c[f],a.call(e,b,f,c)))return f;return-1}}),"function"!=typeof Object.create&&!function(){var a=function(){};Object.create=function(b){if(arguments.length>1)throw new Error("Second argument not supported");if(null===b)throw new Error("Cannot set a null [[Prototype]]");if("object"!=typeof b)throw new TypeError("Argument must be an object");return a.prototype=b,new a}}(),Object.keys||(Object.keys=function(){"use strict";var a=Object.prototype.hasOwnProperty,b=!{toString:null}.propertyIsEnumerable("toString"),c=["toString","toLocaleString","valueOf","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","constructor"],d=c.length;return function(e){if("object"!=typeof e&&("function"!=typeof e||null===e))throw new TypeError("Object.keys called on non-object");var f,g,h=[];for(f in e)a.call(e,f)&&h.push(f);if(b)for(g=0;d>g;g++)a.call(e,c[g])&&h.push(c[g]);return h}}()),"function"!=typeof Object.getPrototypeOf&&(Object.getPrototypeOf="object"==typeof"test".__proto__?function(a){return a.__proto__}:function(a){return a.constructor.prototype}),function(){"use strict";angular.module("firebase").factory("$firebaseConfig",["$FirebaseArray","$FirebaseObject",function(a,b){return function(c){return angular.extend({arrayFactory:a,objectFactory:b},c)}}]).factory("$firebaseUtils",["$q","$timeout","firebaseBatchDelay",function(a,b,c){var d={batch:function(a,e){function f(a,b){if("function"!=typeof a)throw new Error("Must provide a function to be batched. Got "+a);return function(){var c=Array.prototype.slice.call(arguments,0);k.push([a,b,c]),g()}}function g(){j&&(b.cancel(j),j=null),i&&Date.now()-i>e?d.compile(h):(i||(i=Date.now()),j=d.compile(h,a))}function h(){j=null,i=null;var a=k.slice(0);k=[],angular.forEach(a,function(a){a[0].apply(a[1],a[2])})}a=c,e||(e=10*a||100);var i,j,k=[];return f},assertValidRef:function(a,b){if(!angular.isObject(a)||"function"!=typeof a.ref||"function"!=typeof a.ref().transaction)throw new Error(b||"Invalid Firebase reference")},inherit:function(a,b,c){var d=a.prototype;return a.prototype=Object.create(b.prototype),a.prototype.constructor=a,angular.forEach(Object.keys(d),function(b){a.prototype[b]=d[b]}),angular.isObject(c)&&angular.extend(a.prototype,c),a},getPrototypeMethods:function(a,b,c){for(var d={},e=Object.getPrototypeOf({}),f=angular.isFunction(a)&&angular.isObject(a.prototype)?a.prototype:Object.getPrototypeOf(a);f&&f!==e;){for(var g in f)f.hasOwnProperty(g)&&!d.hasOwnProperty(g)&&(d[g]=!0,b.call(c,f[g],g,f));f=Object.getPrototypeOf(f)}},getPublicMethods:function(a,b,c){d.getPrototypeMethods(a,function(a,d){"function"==typeof a&&"_"!==d.charAt(0)&&b.call(c,a,d)})},defer:function(){return a.defer()},reject:function(a){var b=d.defer();return b.reject(a),b.promise},resolve:function(){var a=d.defer();return a.resolve.apply(a,arguments),a.promise},compile:function(a,c){return b(a||function(){},c||0)},deepCopy:function(a){if(!angular.isObject(a))return a;var b=angular.isArray(a)?a.slice():angular.extend({},a);for(var c in b)b.hasOwnProperty(c)&&angular.isObject(b[c])&&(b[c]=d.deepCopy(b[c]));return b},parseScopeData:function(a){var b={};return d.each(a,function(a,c){b[c]=d.deepCopy(a)}),b.$id=a.$id,b.$priority=a.$priority,a.hasOwnProperty("$value")&&(b.$value=a.$value),b},updateRec:function(a,b){var c=b.val(),e=angular.extend({},a);return angular.isObject(c)?delete a.$value:(a.$value=c,c={}),d.each(a,function(b,d){c.hasOwnProperty(d)||delete a[d]}),angular.extend(a,c),a.$priority=b.getPriority(),!angular.equals(e,a)||e.$value!==a.$value||e.$priority!==a.$priority},dataKeys:function(a){var b=[];return d.each(a,function(a,c){b.push(c)}),b},each:function(a,b,c){angular.forEach(a,function(d,e){var f=e.charAt(0);"_"!==f&&"$"!==f&&"."!==f&&b.call(c,d,e,a)})},toJSON:function(a){var b;return angular.isObject(a)||(a={$value:a}),angular.isFunction(a.toJSON)?b=a.toJSON():(b={},d.each(a,function(a,c){b[c]=a})),angular.isDefined(a.$value)&&0===Object.keys(b).length&&null!==a.$value&&(b[".value"]=a.$value),angular.isDefined(a.$priority)&&Object.keys(b).length>0&&null!==a.$priority&&(b[".priority"]=a.$priority),angular.forEach(b,function(a,b){if(b.match(/[.$\[\]#\/]/)&&".value"!==b&&".priority"!==b)throw new Error("Invalid key "+b+" (cannot contain .$[]#)");if(angular.isUndefined(a))throw new Error("Key "+b+" was undefined. Cannot pass undefined in JSON. Use null instead.")}),b},batchDelay:c,allPromises:a.all.bind(a)};return d}])}();
+'use strict';
+
+angular.module('geolocation',[]).constant('geolocation_msgs', {
+        'errors.location.unsupportedBrowser':'Browser does not support location services',
+        'errors.location.permissionDenied':'You have rejected access to your location',
+        'errors.location.positionUnavailable':'Unable to determine your location',
+        'errors.location.timeout':'Service timeout has been reached'
+});
+
+angular.module('geolocation')
+  .factory('geolocation', ['$q','$rootScope','$window','geolocation_msgs',function ($q,$rootScope,$window,geolocation_msgs) {
+    return {
+      getLocation: function (opts) {
+        var deferred = $q.defer();
+        if ($window.navigator && $window.navigator.geolocation) {
+          $window.navigator.geolocation.getCurrentPosition(function(position){
+            $rootScope.$apply(function(){deferred.resolve(position);});
+          }, function(error) {
+            switch (error.code) {
+              case 1:
+                $rootScope.$broadcast('error',geolocation_msgs['errors.location.permissionDenied']);
+                $rootScope.$apply(function() {
+                  deferred.reject(geolocation_msgs['errors.location.permissionDenied']);
+                });
+                break;
+              case 2:
+                $rootScope.$broadcast('error',geolocation_msgs['errors.location.positionUnavailable']);
+                $rootScope.$apply(function() {
+                  deferred.reject(geolocation_msgs['errors.location.positionUnavailable']);
+                });
+                break;
+              case 3:
+                $rootScope.$broadcast('error',geolocation_msgs['errors.location.timeout']);
+                $rootScope.$apply(function() {
+                  deferred.reject(geolocation_msgs['errors.location.timeout']);
+                });
+                break;
+            }
+          }, opts);
+        }
+        else
+        {
+          $rootScope.$broadcast('error',geolocation_msgs['errors.location.unsupportedBrowser']);
+          $rootScope.$apply(function(){deferred.reject(geolocation_msgs['errors.location.unsupportedBrowser']);});
+        }
+        return deferred.promise;
+      }
+    };
+}]);
 /* Modernizr 2.7.1 (Custom Build) | MIT & BSD
  * Build: http://modernizr.com/download/#-fontface-backgroundsize-borderimage-borderradius-boxshadow-flexbox-hsla-multiplebgs-opacity-rgba-textshadow-cssanimations-csscolumns-generatedcontent-cssgradients-cssreflections-csstransforms-csstransforms3d-csstransitions-applicationcache-canvas-canvastext-draganddrop-hashchange-history-audio-video-indexeddb-input-inputtypes-localstorage-postmessage-sessionstorage-websockets-websqldatabase-webworkers-geolocation-inlinesvg-smil-svg-svgclippaths-touch-webgl-shiv-cssclasses-addtest-prefixed-teststyles-testprop-testallprops-hasevent-prefixes-domprefixes-load
  */
 ;window.Modernizr=function(a,b,c){function C(a){j.cssText=a}function D(a,b){return C(n.join(a+";")+(b||""))}function E(a,b){return typeof a===b}function F(a,b){return!!~(""+a).indexOf(b)}function G(a,b){for(var d in a){var e=a[d];if(!F(e,"-")&&j[e]!==c)return b=="pfx"?e:!0}return!1}function H(a,b,d){for(var e in a){var f=b[a[e]];if(f!==c)return d===!1?a[e]:E(f,"function")?f.bind(d||b):f}return!1}function I(a,b,c){var d=a.charAt(0).toUpperCase()+a.slice(1),e=(a+" "+p.join(d+" ")+d).split(" ");return E(b,"string")||E(b,"undefined")?G(e,b):(e=(a+" "+q.join(d+" ")+d).split(" "),H(e,b,c))}function J(){e.input=function(c){for(var d=0,e=c.length;d<e;d++)u[c[d]]=c[d]in k;return u.list&&(u.list=!!b.createElement("datalist")&&!!a.HTMLDataListElement),u}("autocomplete autofocus list placeholder max min multiple pattern required step".split(" ")),e.inputtypes=function(a){for(var d=0,e,f,h,i=a.length;d<i;d++)k.setAttribute("type",f=a[d]),e=k.type!=="text",e&&(k.value=l,k.style.cssText="position:absolute;visibility:hidden;",/^range$/.test(f)&&k.style.WebkitAppearance!==c?(g.appendChild(k),h=b.defaultView,e=h.getComputedStyle&&h.getComputedStyle(k,null).WebkitAppearance!=="textfield"&&k.offsetHeight!==0,g.removeChild(k)):/^(search|tel)$/.test(f)||(/^(url|email)$/.test(f)?e=k.checkValidity&&k.checkValidity()===!1:e=k.value!=l)),t[a[d]]=!!e;return t}("search tel url email datetime date month week time datetime-local number range color".split(" "))}var d="2.7.1",e={},f=!0,g=b.documentElement,h="modernizr",i=b.createElement(h),j=i.style,k=b.createElement("input"),l=":)",m={}.toString,n=" -webkit- -moz- -o- -ms- ".split(" "),o="Webkit Moz O ms",p=o.split(" "),q=o.toLowerCase().split(" "),r={svg:"http://www.w3.org/2000/svg"},s={},t={},u={},v=[],w=v.slice,x,y=function(a,c,d,e){var f,i,j,k,l=b.createElement("div"),m=b.body,n=m||b.createElement("body");if(parseInt(d,10))while(d--)j=b.createElement("div"),j.id=e?e[d]:h+(d+1),l.appendChild(j);return f=["&#173;",'<style id="s',h,'">',a,"</style>"].join(""),l.id=h,(m?l:n).innerHTML+=f,n.appendChild(l),m||(n.style.background="",n.style.overflow="hidden",k=g.style.overflow,g.style.overflow="hidden",g.appendChild(n)),i=c(l,a),m?l.parentNode.removeChild(l):(n.parentNode.removeChild(n),g.style.overflow=k),!!i},z=function(){function d(d,e){e=e||b.createElement(a[d]||"div"),d="on"+d;var f=d in e;return f||(e.setAttribute||(e=b.createElement("div")),e.setAttribute&&e.removeAttribute&&(e.setAttribute(d,""),f=E(e[d],"function"),E(e[d],"undefined")||(e[d]=c),e.removeAttribute(d))),e=null,f}var a={select:"input",change:"input",submit:"form",reset:"form",error:"img",load:"img",abort:"img"};return d}(),A={}.hasOwnProperty,B;!E(A,"undefined")&&!E(A.call,"undefined")?B=function(a,b){return A.call(a,b)}:B=function(a,b){return b in a&&E(a.constructor.prototype[b],"undefined")},Function.prototype.bind||(Function.prototype.bind=function(b){var c=this;if(typeof c!="function")throw new TypeError;var d=w.call(arguments,1),e=function(){if(this instanceof e){var a=function(){};a.prototype=c.prototype;var f=new a,g=c.apply(f,d.concat(w.call(arguments)));return Object(g)===g?g:f}return c.apply(b,d.concat(w.call(arguments)))};return e}),s.flexbox=function(){return I("flexWrap")},s.canvas=function(){var a=b.createElement("canvas");return!!a.getContext&&!!a.getContext("2d")},s.canvastext=function(){return!!e.canvas&&!!E(b.createElement("canvas").getContext("2d").fillText,"function")},s.webgl=function(){return!!a.WebGLRenderingContext},s.touch=function(){var c;return"ontouchstart"in a||a.DocumentTouch&&b instanceof DocumentTouch?c=!0:y(["@media (",n.join("touch-enabled),("),h,")","{#modernizr{top:9px;position:absolute}}"].join(""),function(a){c=a.offsetTop===9}),c},s.geolocation=function(){return"geolocation"in navigator},s.postmessage=function(){return!!a.postMessage},s.websqldatabase=function(){return!!a.openDatabase},s.indexedDB=function(){return!!I("indexedDB",a)},s.hashchange=function(){return z("hashchange",a)&&(b.documentMode===c||b.documentMode>7)},s.history=function(){return!!a.history&&!!history.pushState},s.draganddrop=function(){var a=b.createElement("div");return"draggable"in a||"ondragstart"in a&&"ondrop"in a},s.websockets=function(){return"WebSocket"in a||"MozWebSocket"in a},s.rgba=function(){return C("background-color:rgba(150,255,150,.5)"),F(j.backgroundColor,"rgba")},s.hsla=function(){return C("background-color:hsla(120,40%,100%,.5)"),F(j.backgroundColor,"rgba")||F(j.backgroundColor,"hsla")},s.multiplebgs=function(){return C("background:url(https://),url(https://),red url(https://)"),/(url\s*\(.*?){3}/.test(j.background)},s.backgroundsize=function(){return I("backgroundSize")},s.borderimage=function(){return I("borderImage")},s.borderradius=function(){return I("borderRadius")},s.boxshadow=function(){return I("boxShadow")},s.textshadow=function(){return b.createElement("div").style.textShadow===""},s.opacity=function(){return D("opacity:.55"),/^0.55$/.test(j.opacity)},s.cssanimations=function(){return I("animationName")},s.csscolumns=function(){return I("columnCount")},s.cssgradients=function(){var a="background-image:",b="gradient(linear,left top,right bottom,from(#9f9),to(white));",c="linear-gradient(left top,#9f9, white);";return C((a+"-webkit- ".split(" ").join(b+a)+n.join(c+a)).slice(0,-a.length)),F(j.backgroundImage,"gradient")},s.cssreflections=function(){return I("boxReflect")},s.csstransforms=function(){return!!I("transform")},s.csstransforms3d=function(){var a=!!I("perspective");return a&&"webkitPerspective"in g.style&&y("@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}",function(b,c){a=b.offsetLeft===9&&b.offsetHeight===3}),a},s.csstransitions=function(){return I("transition")},s.fontface=function(){var a;return y('@font-face {font-family:"font";src:url("https://")}',function(c,d){var e=b.getElementById("smodernizr"),f=e.sheet||e.styleSheet,g=f?f.cssRules&&f.cssRules[0]?f.cssRules[0].cssText:f.cssText||"":"";a=/src/i.test(g)&&g.indexOf(d.split(" ")[0])===0}),a},s.generatedcontent=function(){var a;return y(["#",h,"{font:0/0 a}#",h,':after{content:"',l,'";visibility:hidden;font:3px/1 a}'].join(""),function(b){a=b.offsetHeight>=3}),a},s.video=function(){var a=b.createElement("video"),c=!1;try{if(c=!!a.canPlayType)c=new Boolean(c),c.ogg=a.canPlayType('video/ogg; codecs="theora"').replace(/^no$/,""),c.h264=a.canPlayType('video/mp4; codecs="avc1.42E01E"').replace(/^no$/,""),c.webm=a.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/,"")}catch(d){}return c},s.audio=function(){var a=b.createElement("audio"),c=!1;try{if(c=!!a.canPlayType)c=new Boolean(c),c.ogg=a.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),c.mp3=a.canPlayType("audio/mpeg;").replace(/^no$/,""),c.wav=a.canPlayType('audio/wav; codecs="1"').replace(/^no$/,""),c.m4a=(a.canPlayType("audio/x-m4a;")||a.canPlayType("audio/aac;")).replace(/^no$/,"")}catch(d){}return c},s.localstorage=function(){try{return localStorage.setItem(h,h),localStorage.removeItem(h),!0}catch(a){return!1}},s.sessionstorage=function(){try{return sessionStorage.setItem(h,h),sessionStorage.removeItem(h),!0}catch(a){return!1}},s.webworkers=function(){return!!a.Worker},s.applicationcache=function(){return!!a.applicationCache},s.svg=function(){return!!b.createElementNS&&!!b.createElementNS(r.svg,"svg").createSVGRect},s.inlinesvg=function(){var a=b.createElement("div");return a.innerHTML="<svg/>",(a.firstChild&&a.firstChild.namespaceURI)==r.svg},s.smil=function(){return!!b.createElementNS&&/SVGAnimate/.test(m.call(b.createElementNS(r.svg,"animate")))},s.svgclippaths=function(){return!!b.createElementNS&&/SVGClipPath/.test(m.call(b.createElementNS(r.svg,"clipPath")))};for(var K in s)B(s,K)&&(x=K.toLowerCase(),e[x]=s[K](),v.push((e[x]?"":"no-")+x));return e.input||J(),e.addTest=function(a,b){if(typeof a=="object")for(var d in a)B(a,d)&&e.addTest(d,a[d]);else{a=a.toLowerCase();if(e[a]!==c)return e;b=typeof b=="function"?b():b,typeof f!="undefined"&&f&&(g.className+=" "+(b?"":"no-")+a),e[a]=b}return e},C(""),i=k=null,function(a,b){function l(a,b){var c=a.createElement("p"),d=a.getElementsByTagName("head")[0]||a.documentElement;return c.innerHTML="x<style>"+b+"</style>",d.insertBefore(c.lastChild,d.firstChild)}function m(){var a=s.elements;return typeof a=="string"?a.split(" "):a}function n(a){var b=j[a[h]];return b||(b={},i++,a[h]=i,j[i]=b),b}function o(a,c,d){c||(c=b);if(k)return c.createElement(a);d||(d=n(c));var g;return d.cache[a]?g=d.cache[a].cloneNode():f.test(a)?g=(d.cache[a]=d.createElem(a)).cloneNode():g=d.createElem(a),g.canHaveChildren&&!e.test(a)&&!g.tagUrn?d.frag.appendChild(g):g}function p(a,c){a||(a=b);if(k)return a.createDocumentFragment();c=c||n(a);var d=c.frag.cloneNode(),e=0,f=m(),g=f.length;for(;e<g;e++)d.createElement(f[e]);return d}function q(a,b){b.cache||(b.cache={},b.createElem=a.createElement,b.createFrag=a.createDocumentFragment,b.frag=b.createFrag()),a.createElement=function(c){return s.shivMethods?o(c,a,b):b.createElem(c)},a.createDocumentFragment=Function("h,f","return function(){var n=f.cloneNode(),c=n.createElement;h.shivMethods&&("+m().join().replace(/[\w\-]+/g,function(a){return b.createElem(a),b.frag.createElement(a),'c("'+a+'")'})+");return n}")(s,b.frag)}function r(a){a||(a=b);var c=n(a);return s.shivCSS&&!g&&!c.hasCSS&&(c.hasCSS=!!l(a,"article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}template{display:none}")),k||q(a,c),a}var c="3.7.0",d=a.html5||{},e=/^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i,f=/^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i,g,h="_html5shiv",i=0,j={},k;(function(){try{var a=b.createElement("a");a.innerHTML="<xyz></xyz>",g="hidden"in a,k=a.childNodes.length==1||function(){b.createElement("a");var a=b.createDocumentFragment();return typeof a.cloneNode=="undefined"||typeof a.createDocumentFragment=="undefined"||typeof a.createElement=="undefined"}()}catch(c){g=!0,k=!0}})();var s={elements:d.elements||"abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video",version:c,shivCSS:d.shivCSS!==!1,supportsUnknownElements:k,shivMethods:d.shivMethods!==!1,type:"default",shivDocument:r,createElement:o,createDocumentFragment:p};a.html5=s,r(b)}(this,b),e._version=d,e._prefixes=n,e._domPrefixes=q,e._cssomPrefixes=p,e.hasEvent=z,e.testProp=function(a){return G([a])},e.testAllProps=I,e.testStyles=y,e.prefixed=function(a,b,c){return b?I(a,b,c):I(a,"pfx")},g.className=g.className.replace(/(^|\s)no-js(\s|$)/,"$1$2")+(f?" js "+v.join(" "):""),e}(this,this.document),function(a,b,c){function d(a){return"[object Function]"==o.call(a)}function e(a){return"string"==typeof a}function f(){}function g(a){return!a||"loaded"==a||"complete"==a||"uninitialized"==a}function h(){var a=p.shift();q=1,a?a.t?m(function(){("c"==a.t?B.injectCss:B.injectJs)(a.s,0,a.a,a.x,a.e,1)},0):(a(),h()):q=0}function i(a,c,d,e,f,i,j){function k(b){if(!o&&g(l.readyState)&&(u.r=o=1,!q&&h(),l.onload=l.onreadystatechange=null,b)){"img"!=a&&m(function(){t.removeChild(l)},50);for(var d in y[c])y[c].hasOwnProperty(d)&&y[c][d].onload()}}var j=j||B.errorTimeout,l=b.createElement(a),o=0,r=0,u={t:d,s:c,e:f,a:i,x:j};1===y[c]&&(r=1,y[c]=[]),"object"==a?l.data=c:(l.src=c,l.type=a),l.width=l.height="0",l.onerror=l.onload=l.onreadystatechange=function(){k.call(this,r)},p.splice(e,0,u),"img"!=a&&(r||2===y[c]?(t.insertBefore(l,s?null:n),m(k,j)):y[c].push(l))}function j(a,b,c,d,f){return q=0,b=b||"j",e(a)?i("c"==b?v:u,a,b,this.i++,c,d,f):(p.splice(this.i++,0,a),1==p.length&&h()),this}function k(){var a=B;return a.loader={load:j,i:0},a}var l=b.documentElement,m=a.setTimeout,n=b.getElementsByTagName("script")[0],o={}.toString,p=[],q=0,r="MozAppearance"in l.style,s=r&&!!b.createRange().compareNode,t=s?l:n.parentNode,l=a.opera&&"[object Opera]"==o.call(a.opera),l=!!b.attachEvent&&!l,u=r?"object":l?"script":"img",v=l?"script":u,w=Array.isArray||function(a){return"[object Array]"==o.call(a)},x=[],y={},z={timeout:function(a,b){return b.length&&(a.timeout=b[0]),a}},A,B;B=function(a){function b(a){var a=a.split("!"),b=x.length,c=a.pop(),d=a.length,c={url:c,origUrl:c,prefixes:a},e,f,g;for(f=0;f<d;f++)g=a[f].split("="),(e=z[g.shift()])&&(c=e(c,g));for(f=0;f<b;f++)c=x[f](c);return c}function g(a,e,f,g,h){var i=b(a),j=i.autoCallback;i.url.split(".").pop().split("?").shift(),i.bypass||(e&&(e=d(e)?e:e[a]||e[g]||e[a.split("/").pop().split("?")[0]]),i.instead?i.instead(a,e,f,g,h):(y[i.url]?i.noexec=!0:y[i.url]=1,f.load(i.url,i.forceCSS||!i.forceJS&&"css"==i.url.split(".").pop().split("?").shift()?"c":c,i.noexec,i.attrs,i.timeout),(d(e)||d(j))&&f.load(function(){k(),e&&e(i.origUrl,h,g),j&&j(i.origUrl,h,g),y[i.url]=2})))}function h(a,b){function c(a,c){if(a){if(e(a))c||(j=function(){var a=[].slice.call(arguments);k.apply(this,a),l()}),g(a,j,b,0,h);else if(Object(a)===a)for(n in m=function(){var b=0,c;for(c in a)a.hasOwnProperty(c)&&b++;return b}(),a)a.hasOwnProperty(n)&&(!c&&!--m&&(d(j)?j=function(){var a=[].slice.call(arguments);k.apply(this,a),l()}:j[n]=function(a){return function(){var b=[].slice.call(arguments);a&&a.apply(this,b),l()}}(k[n])),g(a[n],j,b,n,h))}else!c&&l()}var h=!!a.test,i=a.load||a.both,j=a.callback||f,k=j,l=a.complete||f,m,n;c(h?a.yep:a.nope,!!i),i&&c(i)}var i,j,l=this.yepnope.loader;if(e(a))g(a,0,l,0);else if(w(a))for(i=0;i<a.length;i++)j=a[i],e(j)?g(j,0,l,0):w(j)?B(j):Object(j)===j&&h(j,l);else Object(a)===a&&h(a,l)},B.addPrefix=function(a,b){z[a]=b},B.addFilter=function(a){x.push(a)},B.errorTimeout=1e4,null==b.readyState&&b.addEventListener&&(b.readyState="loading",b.addEventListener("DOMContentLoaded",A=function(){b.removeEventListener("DOMContentLoaded",A,0),b.readyState="complete"},0)),a.yepnope=k(),a.yepnope.executeStack=h,a.yepnope.injectJs=function(a,c,d,e,i,j){var k=b.createElement("script"),l,o,e=e||B.errorTimeout;k.src=a;for(o in d)k.setAttribute(o,d[o]);c=j?h:c||f,k.onreadystatechange=k.onload=function(){!l&&g(k.readyState)&&(l=1,c(),k.onload=k.onreadystatechange=null)},m(function(){l||(l=1,c(1))},e),i?k.onload():n.parentNode.insertBefore(k,n)},a.yepnope.injectCss=function(a,c,d,e,g,i){var e=b.createElement("link"),j,c=i?h:c||f;e.href=a,e.rel="stylesheet",e.type="text/css";for(j in d)e.setAttribute(j,d[j]);g||(n.parentNode.insertBefore(e,n),m(c,0))}}(this,document),Modernizr.load=function(){yepnope.apply(window,[].slice.call(arguments,0))};
 
-var app = angular.module('travelwishlist', ['ngSanitize', 'firebase'])
-
+var app = angular.module('travelWishlist', ['ngSanitize', 'firebase', 'geolocation'])
 
 // Define constants to inject anywhere in app
 .constant('fBaseUrl', 'https://travel-wishlist.firebaseio.com/')
 .constant('mapBoxToken', 'pk.eyJ1IjoibGlhbXRhcnBleSIsImEiOiJ3c1JpT0ZNIn0.j0iCydu77Cq5vqLFzFRZZw')
+.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?client_id=WNIMB5GMM2Y4NVOZU4WUREHMGCHZE321ZLYTHKYJL2EIUSZY&client_secret=UMDDTDD5AU0DG35GEFLLY4A4LCO5SS0CBGNPYEB1FIU0HPMM&v=20130815')
 
+
+	
+	.factory('api', ['$http', '$q', function($http, $q) {
+
+	    return {
+
+	    	// API call to retreive all places
+	    	getPlaces	: function(url) {
+
+	    		var defer  = $q.defer();
+	    			//prefix = this.prefix(url);
+
+				$http.get(url)
+
+				.success(function(data){
+
+					defer.resolve(data);
+
+		        })
+
+		        .error(function() { console.log("error with request") })
+
+		        return defer.promise 
+
+	    	}
+
+	    	// prefix : function(path){
+
+	    	// 	var prefix = (path.indexOf('?') > -1) ? "&" : "?";
+	    	// 	return prefix
+
+	    	// }
+
+	    }
+	    
+	}])
+
+
+	.directive('addToFirebase', function() {
+
+		return {
+
+			scope : {
+	        	name : '=addToFirebase'
+	        },
+	        
+	    	link: function(scope, ele, attr) {
+
+	        	ele.bind('click', function() {
+
+	        		console.log(scope.name)
+
+	        		// Will need to run firebase in auth service before this will work
+	       			// firebaseObj.child("places").push({
+				    // 	"location": val
+				    // })
+
+	        	})
+
+	    	}
+
+	  	}
+
+	})
 
 
 	.directive('googleplace', function() {
@@ -26865,6 +26978,42 @@ var app = angular.module('travelwishlist', ['ngSanitize', 'firebase'])
 	    	link: function(scope, element, attr) {
 
 	        	//scope.gPlace = new google.maps.places.Autocomplete(element[0]);
+
+	    	}
+
+	  	}
+
+	})
+
+
+
+	.directive('removeFromFirebase', function() {
+
+		return {
+
+			scope : {
+	        	name : '=addToFirebase'
+	        },
+	        
+	    	link: function(scope, ele, attr) {
+
+	        	ele.bind('click', function() {
+
+	        		console.log(scope.name)
+
+	        		// Remove entry from Firebase
+					    // $scope.removeEntry = function(val) {
+
+					    //   if (confirm('Are you sure you want to remove this location?')) {
+
+					    //       firebaseObj.child("places").remove()
+
+					    //   }         
+
+					    // }
+
+
+	        	})
 
 	    	}
 
@@ -26938,54 +27087,68 @@ var app = angular.module('travelwishlist', ['ngSanitize', 'firebase'])
 
   }])
 
-  .controller('main', ['$scope', '$http', '$firebase', 'fBaseUrl', 'mapBoxToken', function($scope, $http, $firebase, fBaseUrl, mapBoxToken) {
-      
-      // Init Firebase
-      var firebaseObj  =  new Firebase(fBaseUrl),
-          sync         =  $firebase(firebaseObj);
+.controller('main', ['$scope', 
+                     '$http', 
+                     '$firebase', 
+                     'api',
+                     'fBaseUrl', 
+                     'mapBoxToken', 
+                     'fourSquareBase',
+                     'geolocation',
+                     function($scope, $http, $firebase, api, fBaseUrl, mapBoxToken, fourSquareBase, geolocation) {
+    
 
-      // Scope variables
+
+  // Init Firebase
+  var firebaseObj  =  new Firebase(fBaseUrl),
+      sync         =  $firebase(firebaseObj);
+
+
+
+  // Variables
+  $scope.field         = "";
+  $scope.data          = sync.$asObject();
+  L.mapbox.accessToken = mapBoxToken
+
+
+
+  // Map - uses geolocation API
+  if (navigator.geolocation) {
+    var map = L.mapbox.map('map', 'liamtarpey.le3488c3', { maxZoom: 14 })
+      .locate().on('locationfound', function(e) {
+        map.fitBounds(e.bounds);
+    })
+  } else { var map = L.mapbox.map('map', 'liamtarpey.le3488c3').setView( [32.7150, -117.1625], 9) }
+
+  // Get current coords
+  geolocation.getLocation().then(function(data){
+
+    $scope.coords = {
+
+      lat: data.coords.latitude, 
+      long: data.coords.longitude
+
+    };
+    
+  }); 
+
+
+  // Create new entry in Firebase
+  $scope.suggestEntry = function(val) {
+
+      $scope.Url = fourSquareBase + '&ll=' + $scope.coords.lat + ',' + $scope.coords.long + '&query=' + val
+
+      // Foursquare API call
+      api.getPlaces($scope.Url).then(function (data) {
+
+        $scope.suggestions = data.response.venues
+        
+      })
+
+      // Clear input after submit
       $scope.field = "";
-      $scope.data  = sync.$asObject();
+
+  }
 
 
-    // =======
-    // Map
-    // =======
-    L.mapbox.accessToken = mapBoxToken
-    var map = L.mapbox.map('map', 'liamtarpey.le3488c3').setView([40, -74.50], 9)
-
-
-    // ==========
-    // Sidebar 
-    // =========
-
-      // Create new entry in Firebase
-      $scope.setNewEntry = function(val) {
-
-        firebaseObj.child("places").push({
-
-          "location": val
-
-        })
-
-        // Clear input after submit
-        $scope.field = "";
-
-      }
-
-      // Remove entry from Firebase
-      $scope.removeEntry = function(val) {
-
-        if (confirm('Are you sure you want to remove this location?')) {
-
-            firebaseObj.child("places").remove()
-
-        }         
-
-      }
-
-
-
-
-  }])
+}])
