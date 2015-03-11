@@ -14,7 +14,7 @@
 	        		console.log(scope.name)
 
 	        		// Will need to run firebase in auth service before this will work
-	       			// firebaseObj.child("places").push({
+	       			// firebaseRef.child("places").push({
 				    // 	"location": val
 				    // })
 

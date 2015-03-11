@@ -1,5 +1,5 @@
 
-var app = angular.module('travelWishlist', ['ngSanitize', 'firebase', 'geolocation'])
+var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
 
 // Define constants to inject anywhere in app
 .constant('fBaseUrl', 'https://travel-wishlist.firebaseio.com/')

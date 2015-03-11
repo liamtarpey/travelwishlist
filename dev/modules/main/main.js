@@ -1,25 +1,17 @@
 
 .controller('main', ['$scope', 
                      '$http', 
-                     '$firebase', 
+                     'authService', 
                      'api',
                      'fBaseUrl', 
                      'mapBoxToken', 
                      'fourSquareBase',
                      'geolocation',
-                     function($scope, $http, $firebase, api, fBaseUrl, mapBoxToken, fourSquareBase, geolocation) {
+                     function($scope, $http, authService, api, fBaseUrl, mapBoxToken, fourSquareBase, geolocation) {
     
-
-
-  // Init Firebase
-  var firebaseObj  =  new Firebase(fBaseUrl),
-      sync         =  $firebase(firebaseObj);
-
-
 
   // Variables
   $scope.field         = "";
-  $scope.data          = sync.$asObject();
   L.mapbox.accessToken = mapBoxToken
 
 
@@ -61,6 +53,5 @@
       $scope.field = "";
 
   }
-
 
 }])

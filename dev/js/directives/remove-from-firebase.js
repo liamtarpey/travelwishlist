@@ -5,7 +5,7 @@
 		return {
 
 			scope : {
-	        	name : '=addToFirebase'
+	        	name : '=removeFromFirebase'
 	        },
 	        
 	    	link: function(scope, ele, attr) {
@@ -19,7 +19,7 @@
 
 					    //   if (confirm('Are you sure you want to remove this location?')) {
 
-					    //       firebaseObj.child("places").remove()
+					    //       firebaseRef.child("places").remove()
 
 					    //   }         
 
