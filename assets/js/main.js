@@ -27122,12 +27122,11 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
                      '$http', 
                      'authService', 
                      'api',
-                     '$firebaseObject',
                      'fBaseUrl', 
                      'mapBoxToken', 
                      'fourSquareBase',
                      'geolocation',
-                     function($scope, $http, authService, api, $firebaseObject, fBaseUrl, mapBoxToken, fourSquareBase, geolocation) {
+                     function($scope, $http, authService, api, fBaseUrl, mapBoxToken, fourSquareBase, geolocation) {
     
 
   // Variables
@@ -27137,16 +27136,7 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
   
   //$scope.data = $firebaseObject(authService.firebaseRef)
 
-
-  // Map - uses geolocation API
-  if (navigator.geolocation) {
-    var map = L.mapbox.map('map', 'liamtarpey.le3488c3', { maxZoom: 14 })
-      .locate().on('locationfound', function(e) {
-        map.fitBounds(e.bounds);
-    })
-  } else { var map = L.mapbox.map('map', 'liamtarpey.le3488c3').setView( [32.7150, -117.1625], 9) }
-
-  // Get current coords
+  // Get current coords & load map
   geolocation.getLocation().then(function(data){
 
     $scope.coords = {
@@ -27158,8 +27148,16 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
     
   }); 
 
+  if (navigator.geolocation) {
+    var map = L.mapbox.map('map', 'liamtarpey.le3488c3', { maxZoom: 14 })
+      .locate().on('locationfound', function(e) {
+        map.fitBounds(e.bounds);
+    })
+  } else { var map = L.mapbox.map('map', 'liamtarpey.le3488c3').setView( [32.7150, -117.1625], 9) }
 
-  // Create new entry in Firebase
+  
+
+  // Suggest place with Foursquare API call
   $scope.suggestEntry = function(val) {
 
       $scope.Url = fourSquareBase + '&ll=' + $scope.coords.lat + ',' + $scope.coords.long + '&query=' + val
