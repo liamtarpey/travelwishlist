@@ -69,7 +69,7 @@ module.exports = function(grunt) {
             css: {
                 files: [
                     'dev/sass/**/*.scss',
-                    'dev/views/**/*.scss'
+                    'dev/modules/**/*.scss'
                 ],
                 tasks: ['clean:css', 'compass'],
                 options: {

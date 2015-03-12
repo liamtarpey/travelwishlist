@@ -91,7 +91,7 @@ html, body, section, main {
 .wrapper {
   width: 100%;
   max-width: 1200px;
-  padding: 24px;
+  padding: 20px;
   margin: 0 auto;
 }
 
@@ -344,7 +344,7 @@ html, body, section, main {
 blockquote {
   quotes: "\201C" "\201D" "\2018" "\2019";
   border-left: 7px solid #17ad8a;
-  padding: 6px 24px;
+  padding: 5px 20px;
   width: 100%;
 }
 @media (min-width: 840px) {
@@ -379,7 +379,7 @@ input,
 button,
 select,
 textarea {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
@@ -405,7 +405,7 @@ input[type="password"] {
   display: block;
   width: 100%;
   max-width: 480px;
-  padding: 12px;
+  padding: 10px;
 }
 
 /* line 59, ../../dev/sass/partials/globals/_forms.scss */
@@ -426,7 +426,7 @@ button,
 input[type="submit"] {
   border: none;
   width: auto;
-  padding: 6px 12px;
+  padding: 5px 10px;
   background: #17ad8a;
   color: white;
   display: inline-block;
@@ -490,17 +490,17 @@ a:active {
 
 /* line 6, ../../dev/sass/partials/globals/_lists.scss */
 ul, ol {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 /* line 12, ../../dev/sass/partials/globals/_lists.scss */
 ul.inline-list li, ol.inline-list li {
   display: inline-block;
-  margin-right: 12px;
+  margin-right: 10px;
 }
 /* line 23, ../../dev/sass/partials/globals/_lists.scss */
 ul.stacked-list li, ol.stacked-list li {
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 /* line 12, ../../dev/sass/partials/globals/_tables.scss */
@@ -510,7 +510,7 @@ table {
 /* line 16, ../../dev/sass/partials/globals/_tables.scss */
 table th, table td {
   border-bottom: 1px solid #c9c9c9;
-  padding: 12px;
+  padding: 10px;
   width: 25%;
 }
 
@@ -544,7 +544,7 @@ html {
 
 /* line 16, ../../dev/sass/partials/globals/_typography.scss */
 h1, h2, h3, h4, h5, h6, p {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 /* line 22, ../../dev/sass/partials/globals/_typography.scss */
@@ -616,24 +616,13 @@ em {
 }
 
 /* line 13, ../../dev/sass/partials/modules/_app-main.scss */
-.app-main .sidebar {
-  width: 20%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  background: #e6e6e6;
-  padding: 24px;
-  z-index: 111;
-}
-/* line 26, ../../dev/sass/partials/modules/_app-main.scss */
 .app-main #map {
   z-index: 1;
   position: relative;
   width: 100%;
   height: 100%;
 }
-/* line 33, ../../dev/sass/partials/modules/_app-main.scss */
+/* line 20, ../../dev/sass/partials/modules/_app-main.scss */
 .app-main #map .angular-google-map-container {
   width: 100%;
   min-height: 100%;
@@ -642,6 +631,43 @@ em {
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+/* line 3, ../../dev/modules/main/_sidebar.scss */
+.sidebar {
+  width: 300px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: #e6e6e6;
+  padding: 20px;
+  z-index: 111;
+}
+
+/* line 3, ../../dev/modules/main/_suggestions.scss */
+.location-suggestions {
+  position: absolute;
+  background: white;
+  width: 300px;
+  top: 20px;
+  left: 305px;
+  padding: 20px;
+  -moz-box-shadow: 1px 1px 5px 1px #c9c9c9;
+  -webkit-box-shadow: 1px 1px 5px 1px #c9c9c9;
+  box-shadow: 1px 1px 5px 1px #c9c9c9;
+}
+/* line 13, ../../dev/modules/main/_suggestions.scss */
+.location-suggestions:before {
+  content: '';
+  position: absolute;
+  top: 13.33333px;
+  left: -13.33333px;
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 20px solid white;
 }
 
 /* line 6, ../../dev/sass/misc/_helpers.scss */
@@ -684,7 +710,7 @@ em {
 
 /* line 51, ../../dev/sass/misc/_helpers.scss */
 .mb {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   display: block;
 }
 

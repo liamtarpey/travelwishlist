@@ -10,19 +10,6 @@
 
 .app-main {
 
-	.sidebar {
-
-		width: 20%;
-		position: fixed;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		background: $col-lightgrey;
-		padding: $baseline;
-		z-index: 111;
-
-	}
-
 	#map {
 
 		z-index: 1;

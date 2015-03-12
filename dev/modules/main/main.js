@@ -11,8 +11,9 @@
     
 
   // Variables
-  $scope.field         = "";
-  L.mapbox.accessToken = mapBoxToken
+  $scope.field                = ""
+  L.mapbox.accessToken        = mapBoxToken
+  $scope.suggestionsVisible   = false
 
   
   //$scope.data = $firebaseObject(authService.firebaseRef)
@@ -47,11 +48,21 @@
       api.getPlaces($scope.Url).then(function (data) {
 
         $scope.suggestions = data.response.venues
-        
+
       })
 
+      $scope.suggestionsVisible = true
+
+      
+
       // Clear input after submit
-      $scope.field = "";
+     //$scope.field = "";
+
+  }
+
+  $scope.hideSuggestions = function() {
+
+    $scope.suggestionsVisible = false
 
   }
 

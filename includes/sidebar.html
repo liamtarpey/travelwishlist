@@ -3,17 +3,7 @@
         <input type="text" ng-model="field" />
     </form>
 
-    <!-- <ul ng-show="field != null"> figure out how to make this work, don't want to show if input is null -->
-    <ul>
-    	<li ng-repeat="suggestion in suggestions | limitTo:5 ">
-            <a ng-href="javascript:;" add-to-firebase="suggestion.name" >
-        		<span ng-bind-html="suggestion.name"></span>
-                <span ng-bind-html="suggestion.location.postalCode"></span>
-            </a>
-    	</li>
-    </ul>
-    
-    <hr style="background:red">
+    <div ng-include="'../includes/suggestions.html'"></div>
 
     <ul class="places">
         <li ng-repeat="place in data.places | orderBy: place.location">

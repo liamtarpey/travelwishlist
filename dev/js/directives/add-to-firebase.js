@@ -5,19 +5,23 @@
 
 			scope : {
 
-	        	name : '=addToFirebase'
+	        	name : '=addToFirebase',
+	        	visible : "=visible"
 
 	        },
 	        
 	    	link: function(scope, ele, attr) {
 
 	        	ele.bind('click', function() {
+     		
 
-	       			authService.firebaseRef.child("places").push({
+	        		//	authService.firebaseRef.child("places").push({
 
-				    	"location": scope.name
+				    // 	"location": scope.name
 
-				    })
+				    // })
+
+	        		console.log(scope.name)
 
 	        	})
 

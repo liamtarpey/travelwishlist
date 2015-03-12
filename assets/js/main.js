@@ -26979,19 +26979,23 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
 
 			scope : {
 
-	        	name : '=addToFirebase'
+	        	name : '=addToFirebase',
+	        	visible : "=visible"
 
 	        },
 	        
 	    	link: function(scope, ele, attr) {
 
 	        	ele.bind('click', function() {
+     		
 
-	       			authService.firebaseRef.child("places").push({
+	        		//	authService.firebaseRef.child("places").push({
 
-				    	"location": scope.name
+				    // 	"location": scope.name
 
-				    })
+				    // })
+
+	        		console.log(scope.name)
 
 	        	})
 
@@ -27130,8 +27134,9 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
     
 
   // Variables
-  $scope.field         = "";
-  L.mapbox.accessToken = mapBoxToken
+  $scope.field                = ""
+  L.mapbox.accessToken        = mapBoxToken
+  $scope.suggestionsVisible   = false
 
   
   //$scope.data = $firebaseObject(authService.firebaseRef)
@@ -27166,11 +27171,21 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
       api.getPlaces($scope.Url).then(function (data) {
 
         $scope.suggestions = data.response.venues
-        
+
       })
 
+      $scope.suggestionsVisible = true
+
+      
+
       // Clear input after submit
-      $scope.field = "";
+     //$scope.field = "";
+
+  }
+
+  $scope.hideSuggestions = function() {
+
+    $scope.suggestionsVisible = false
 
   }
 

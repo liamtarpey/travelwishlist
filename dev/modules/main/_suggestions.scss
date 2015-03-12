@@ -1,0 +1,27 @@
+
+
+.location-suggestions {
+
+	position: absolute;
+	background: $col-white;	
+	width: 300px;
+	top: $baseline;
+	left: 305px;
+	padding: $baseline;
+	@include box-shadow(1px 1px 5px 1px $col-grey);
+
+	&:before {
+
+		content: '';
+		position: absolute;
+		top: $baseline/1.5;
+		left: -$baseline/1.5;
+		width: 0; 
+		height: 0; 
+		border-top: $baseline solid transparent;
+		border-bottom: $baseline solid transparent; 
+		border-right: $baseline solid $col-white; 
+
+	}
+
+}
