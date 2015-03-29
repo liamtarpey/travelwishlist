@@ -26989,11 +26989,11 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
 	        	ele.bind('click', function() {
      		
 
-	        		//	authService.firebaseRef.child("places").push({
+	        		authService.firebaseRef.child("places").push({
 
-				    // 	"location": scope.name
+				    	"location": scope.name
 
-				    // })
+				    })
 
 	        		console.log(scope.name)
 
@@ -27165,6 +27165,8 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
   // Suggest place with Foursquare API call
   $scope.suggestEntry = function(val) {
 
+      $scope.suggestionsVisible = true
+
       $scope.Url = fourSquareBase + '&ll=' + $scope.coords.lat + ',' + $scope.coords.long + '&query=' + val
 
       // Foursquare API call
@@ -27174,7 +27176,7 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
 
       })
 
-      $scope.suggestionsVisible = true
+      
 
       
 

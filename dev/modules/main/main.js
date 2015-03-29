@@ -18,6 +18,9 @@
   
   //$scope.data = $firebaseObject(authService.firebaseRef)
 
+  
+  
+
   // Get current coords & load map
   geolocation.getLocation().then(function(data){
 
@@ -42,6 +45,8 @@
   // Suggest place with Foursquare API call
   $scope.suggestEntry = function(val) {
 
+      $scope.suggestionsVisible = true
+
       $scope.Url = fourSquareBase + '&ll=' + $scope.coords.lat + ',' + $scope.coords.long + '&query=' + val
 
       // Foursquare API call
@@ -51,7 +56,7 @@
 
       })
 
-      $scope.suggestionsVisible = true
+      
 
       
 

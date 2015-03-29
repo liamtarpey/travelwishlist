@@ -1,5 +1,5 @@
 
-<ul class="location-suggestions" ng-if="suggestionsVisible">
+<ul class="location-suggestions" ng-show="suggestionsVisible">
 	<li ng-repeat="suggestion in suggestions | limitTo:5 ">
         <a href="javascript:;" ng-click="hideSuggestions()" add-to-firebase="suggestion.name" >
     		<span ng-bind-html="suggestion.name"></span>
@@ -7,9 +7,3 @@
         </a>
 	</li>
 </ul>
-
-<button ng-click="suggestionsVisible = false" >
-	Click
-</button>
-
-{{suggestionsVisible}}
