@@ -12,10 +12,6 @@
 
 	        	ele.bind('click', function() {
 
-	        		console.log(scope.name)
-
-	        		
-
 
 	        	})
 

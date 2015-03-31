@@ -13,10 +13,12 @@
     // Init mapbox 
     mapboxService.init({ accessToken: mapBoxToken });  
 
+
     // Variables
     $scope.field                = "";
-    //L.mapbox.accessToken        = mapBoxToken;
     $scope.suggestionsVisible   = false;
+    $scope.options              = {};
+
 
 
     // Get current coords & load map
@@ -25,7 +27,7 @@
       $scope.coords = {
 
         lat: data.coords.latitude, 
-        long: data.coords.longitude
+        lng: data.coords.longitude
 
       };
       
@@ -40,7 +42,6 @@
             $scope.data = place.val();
 
         })
-      
 
     }, function (errorObject) {
 
@@ -49,69 +50,34 @@
     });
 
 
-
-   
-
-
-    
-
-    // if (navigator.geolocation) {
-    //   var map = L.mapbox.map('map', 'liamtarpey.le3488c3', { maxZoom: 14 })
-    //     .locate().on('locationfound', function(e) {
-    //       map.fitBounds(e.bounds);
-    //   })
-    // } else { var map = L.mapbox.map('map', 'liamtarpey.le3488c3').setView( [32.7150, -117.1625], 9) }
-
-
-    //console.log("MAIN DATA: ", $scope.data);
-  // map.featureLayer.on('ready', function(e) {
-  //     var markers = [
-  //       32.7150, -117.1625,
-  //       30.7150, -118.1625
-  //     ];
-  //     this.eachLayer(function(marker) { markers.push(marker); });
-  //     cycle(markers);
-  // });
-
-  // function cycle(markers) {
-  //     var i = 0;
-  //     function run() {
-  //         if (++i > markers.length - 1) i = 0;
-  //         var marker = markers[i];
-  //         //console.log(marker.getLatLng());
-  //     }
-  //     run();
-  // }
-
-
-    // function cycle(markers) {
-    //     var i = 0;
-    //     function run() {
-    //         if (++i > markers.length - 1) i = 0;
-    //         map.setView(markers[i].getLatLng(), 12);
-    //         markers[i].openPopup();
-    //         window.setTimeout(run, 3000);
-    //     }
-    //     run();
-    // }
-    // cycle(32.7150, -117.1625);
-
-    
-
     // Suggest place with Foursquare API call
     $scope.suggestEntry = function(val) {
 
         $scope.suggestionsVisible = true
 
-        $scope.Url = fourSquareBase + '&ll=' + $scope.coords.lat + ',' + $scope.coords.long + '&query=' + val
+        $scope.Url = fourSquareBase + '&ll=' + $scope.coords.lat + ',' + $scope.coords.lng + '&query=' + val
 
         // Foursquare API call
         api.getPlaces($scope.Url).then(function (data) {
 
-          $scope.suggestions = data.response.venues
-          //console.log($scope.suggestions)
+            $scope.suggestions = data.response.venues
+            console.log($scope.suggestions)
 
-        })
+            $scope.options = {
+
+                name : $scope.suggestions[0].name,
+                checkins : $scope.suggestions[0].stats.checkinsCount,
+                address : $scope.suggestions[0].location.formattedAddress[0],
+                lat : $scope.suggestions[0].location.lat,
+                lng : $scope.suggestions[0].location.lng,
+                url : $scope.suggestions[0].url
+
+                // The above fails to update if no keyup has been pressed - will fix
+
+            };       
+
+        });
+
         // Clear input after submit
        //$scope.field = "";
 
@@ -123,9 +89,10 @@
 
     }
 
-    // Remove entry from Firebase
+    //Remove entry from Firebase
     $scope.removeEntry = function() {
 
+      //console.log(place)
       authService.firebaseRef.child("places").remove()      
 
     }

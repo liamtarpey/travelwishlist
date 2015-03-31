@@ -23,9 +23,9 @@
                 <div ng-include="'/includes/sidebar.html'"></div>
                 <!-- <div id="map"></div> -->
 
-                <mapbox map-id="liamtarpey.le3488c3" ng-if="coords" lat="{{coords.lat}}" lng="{{coords.long}}">
+                <mapbox map-id="liamtarpey.le3488c3" ng-if="coords" lat="{{coords.lat}}" lng="{{coords.lng}}">
                     <div ng-repeat="place in data.places">
-                        <marker lat="{{place.lat}}" lng="{{place.long}}">
+                        <marker lat="{{place.lat}}" lng="{{place.lng}}">
                             <h1>TEST</h1>
                         </marker>
                     </div>

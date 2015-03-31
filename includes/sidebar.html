@@ -7,9 +7,8 @@
 
     <ul class="places">
         <li ng-repeat="place in data.places | orderBy: place.location">
-            <span ng-bind-html="place.location"></span>
+            <span ng-bind-html="place.name"></span>
             <a ng-href="javascript:;" class="remove-place" ng-click="removeEntry()">X</a>
         </li>
     </ul>
-
 </div>

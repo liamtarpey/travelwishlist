@@ -18,15 +18,7 @@
 
 				    	scope.params
 
-				    	//scope.params
-
-
 				    )
-
-	        		console.log(scope.params)
-	        		//console.log(scope.$eval(attr['addToFirebase']))
-
-	        		//console.log(scope.name)
 
 	        	})
 

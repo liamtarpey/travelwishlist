@@ -3,11 +3,10 @@
 
 	    return {
 
-	    	// API call to retreive all places
+	    	// API call to retreive all places from Foursquare
 	    	getPlaces	: function(url) {
 
 	    		var defer  = $q.defer();
-	    			//prefix = this.prefix(url);
 
 				$http.get(url)
 
@@ -22,14 +21,7 @@
 		        return defer.promise 
 
 	    	}
-
-	    	// prefix : function(path){
-
-	    	// 	var prefix = (path.indexOf('?') > -1) ? "&" : "?";
-	    	// 	return prefix
-
-	    	// }
-
+	    	
 	    }
 	    
 	}]);
