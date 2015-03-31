@@ -9,7 +9,7 @@
         <!-- <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon"/> -->
         <link rel="stylesheet" href="assets/css/styles.css"/>
 
-        <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+        <!-- Place css in SASS partial to avoid extra http request -->
         <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
 
     </head>
@@ -17,10 +17,22 @@
 
         <main class="app-main">
 
-           <!-- Logged in view -->
+            <!-- Logged in view -->
             <section class="logged-in" ng-if="auth.user !== null" ng-controller="main">
+
                 <div ng-include="'/includes/sidebar.html'"></div>
-                <div id="map"></div>
+                <!-- <div id="map"></div> -->
+
+                <mapbox map-id="liamtarpey.le3488c3" ng-if="coords" lat="{{coords.lat}}" lng="{{coords.long}}">
+                    <div ng-repeat="place in data.places">
+                        <marker lat="{{place.lat}}" lng="{{place.long}}">
+                            <h1>TEST</h1>
+                        </marker>
+                    </div>
+                </mapbox>
+
+                 
+
             </section>
 
             <!-- Logged out view -->
@@ -28,15 +40,12 @@
                 <div ng-include="'/includes/auth.html'"></div>
             </section>   
 
-            <div style="display:none">
-                
-            </div>
-            <div id="google-map"></div>
-
         </main>
 
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+<!--         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script> -->
+<!--         <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script> -->
         <script src="assets/js/main.js"></script>
+
         <script src="//localhost:35729/livereload.js"></script>
 
     </body>

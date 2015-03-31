@@ -1,5 +1,5 @@
 
-	.directive('googleplace', function() {
+	app.directive('googleplace', function() {
 
 		return {
 
@@ -11,4 +11,4 @@
 
 	  	}
 
-	})
+	});

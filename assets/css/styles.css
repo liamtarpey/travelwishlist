@@ -615,22 +615,13 @@ em {
   font-style: italic;
 }
 
-/* line 13, ../../dev/sass/partials/modules/_app-main.scss */
-.app-main #map {
-  z-index: 1;
-  position: relative;
+/* line 5, ../../dev/sass/partials/modules/_app-main.scss */
+.app-main {
   width: 100%;
-  height: 100%;
 }
-/* line 20, ../../dev/sass/partials/modules/_app-main.scss */
-.app-main #map .angular-google-map-container {
+/* line 9, ../../dev/sass/partials/modules/_app-main.scss */
+.app-main .logged-in {
   width: 100%;
-  min-height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }
 
 /* line 3, ../../dev/modules/main/_sidebar.scss */
@@ -668,6 +659,12 @@ em {
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
   border-right: 20px solid white;
+}
+
+/* line 3, ../../dev/modules/main/_map.scss */
+.angular-mapbox-map {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* line 6, ../../dev/sass/misc/_helpers.scss */

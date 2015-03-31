@@ -1,5 +1,5 @@
 
-	.factory('authService', function(fBaseUrl) {
+	app.factory('authService', function(fBaseUrl) {
 
 		return {
 
@@ -7,5 +7,4 @@
 
 		}  		
 
-
-	})
+	});

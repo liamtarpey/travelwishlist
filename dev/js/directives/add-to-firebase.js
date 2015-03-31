@@ -1,5 +1,5 @@
 
-	.directive('addToFirebase', function(authService) {
+	app.directive('addToFirebase', function(authService) {
 
 		return {
 
@@ -34,4 +34,4 @@
 
 	  	}
 
-	})
+	});

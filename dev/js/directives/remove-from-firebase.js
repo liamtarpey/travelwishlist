@@ -1,6 +1,6 @@
 
 
-	.directive('removeFromFirebase', function() {
+	app.directive('removeFromFirebase', function() {
 
 		return {
 
@@ -23,4 +23,4 @@
 
 	  	}
 
-	})
+	});
