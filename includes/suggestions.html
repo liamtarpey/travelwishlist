@@ -1,9 +1,11 @@
 
 <ul class="location-suggestions" ng-show="suggestionsVisible">
 	<li ng-repeat="suggestion in suggestions | limitTo:5 ">
-        <a href="javascript:;" ng-click="hideSuggestions()" add-to-firebase="suggestion.name" >
+        <a href="javascript:;" add-to-firebase="{location: suggestion.name, lat: suggestion.location.lat, long: suggestion.location.lng}">
     		<span ng-bind-html="suggestion.name"></span>
             <span ng-bind-html="suggestion.location.postalCode"></span>
         </a>
 	</li>
 </ul>
+
+<!-- add-to-firebase="suggestion.name"  -->

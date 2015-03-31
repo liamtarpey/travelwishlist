@@ -14,16 +14,7 @@
 
 	        		console.log(scope.name)
 
-	        		// Remove entry from Firebase
-					    // $scope.removeEntry = function(val) {
-
-					    //   if (confirm('Are you sure you want to remove this location?')) {
-
-					    //       firebaseRef.child("places").remove()
-
-					    //   }         
-
-					    // }
+	        		
 
 
 	        	})

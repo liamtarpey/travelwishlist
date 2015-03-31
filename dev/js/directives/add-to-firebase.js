@@ -5,8 +5,7 @@
 
 			scope : {
 
-	        	name : '=addToFirebase',
-	        	visible : "=visible"
+	        	params : '=addToFirebase'
 
 	        },
 	        
@@ -15,13 +14,19 @@
 	        	ele.bind('click', function() {
      		
 
-	        		authService.firebaseRef.child("places").push({
+	        		authService.firebaseRef.child("places").push(
 
-				    	"location": scope.name
+				    	scope.params
 
-				    })
+				    	//scope.params
 
-	        		console.log(scope.name)
+
+				    )
+
+	        		console.log(scope.params)
+	        		//console.log(scope.$eval(attr['addToFirebase']))
+
+	        		//console.log(scope.name)
 
 	        	})
 

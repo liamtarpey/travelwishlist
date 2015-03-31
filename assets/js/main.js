@@ -26971,6 +26971,7 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
 
 		}  		
 
+
 	})
 
 	.directive('addToFirebase', function(authService) {
@@ -26979,8 +26980,7 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
 
 			scope : {
 
-	        	name : '=addToFirebase',
-	        	visible : "=visible"
+	        	params : '=addToFirebase'
 
 	        },
 	        
@@ -26989,13 +26989,19 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
 	        	ele.bind('click', function() {
      		
 
-	        		authService.firebaseRef.child("places").push({
+	        		authService.firebaseRef.child("places").push(
 
-				    	"location": scope.name
+				    	scope.params
 
-				    })
+				    	//scope.params
 
-	        		console.log(scope.name)
+
+				    )
+
+	        		console.log(scope.params)
+	        		//console.log(scope.$eval(attr['addToFirebase']))
+
+	        		//console.log(scope.name)
 
 	        	})
 
@@ -27036,16 +27042,7 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
 
 	        		console.log(scope.name)
 
-	        		// Remove entry from Firebase
-					    // $scope.removeEntry = function(val) {
-
-					    //   if (confirm('Are you sure you want to remove this location?')) {
-
-					    //       firebaseRef.child("places").remove()
-
-					    //   }         
-
-					    // }
+	        		
 
 
 	        	})
@@ -27134,12 +27131,26 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
     
 
   // Variables
-  $scope.field                = ""
-  L.mapbox.accessToken        = mapBoxToken
-  $scope.suggestionsVisible   = false
+  $scope.field                = "";
+  L.mapbox.accessToken        = mapBoxToken;
+  $scope.suggestionsVisible   = false;
+  $scope.data                 = "";
 
   
-  //$scope.data = $firebaseObject(authService.firebaseRef)
+  // Get JSON from firebase
+  authService.firebaseRef.on("value", function(place) {
+
+    $scope.data = place.val();
+    
+
+  }, function (errorObject) {
+
+    console.log("The read failed: " + errorObject.code);
+
+  });
+
+ 
+
 
   // Get current coords & load map
   geolocation.getLocation().then(function(data){
@@ -27160,6 +27171,40 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
     })
   } else { var map = L.mapbox.map('map', 'liamtarpey.le3488c3').setView( [32.7150, -117.1625], 9) }
 
+
+  //console.log("MAIN DATA: ", $scope.data);
+map.featureLayer.on('ready', function(e) {
+    var markers = [
+      32.7150, -117.1625,
+      30.7150, -118.1625
+    ];
+    this.eachLayer(function(marker) { markers.push(marker); });
+    cycle(markers);
+});
+
+function cycle(markers) {
+    var i = 0;
+    function run() {
+        if (++i > markers.length - 1) i = 0;
+        var marker = markers[i];
+        //console.log(marker.getLatLng());
+    }
+    run();
+}
+
+
+  // function cycle(markers) {
+  //     var i = 0;
+  //     function run() {
+  //         if (++i > markers.length - 1) i = 0;
+  //         map.setView(markers[i].getLatLng(), 12);
+  //         markers[i].openPopup();
+  //         window.setTimeout(run, 3000);
+  //     }
+  //     run();
+  // }
+  // cycle(32.7150, -117.1625);
+
   
 
   // Suggest place with Foursquare API call
@@ -27173,13 +27218,9 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
       api.getPlaces($scope.Url).then(function (data) {
 
         $scope.suggestions = data.response.venues
+        console.log($scope.suggestions)
 
       })
-
-      
-
-      
-
       // Clear input after submit
      //$scope.field = "";
 
@@ -27188,6 +27229,13 @@ var app = angular.module('travelWishlist', ['ngSanitize', 'geolocation'])
   $scope.hideSuggestions = function() {
 
     $scope.suggestionsVisible = false
+
+  }
+
+  // Remove entry from Firebase
+  $scope.removeEntry = function() {
+
+    authService.firebaseRef.child("places").remove()      
 
   }
 
