@@ -16,9 +16,9 @@
 
     // Variables
     $scope.field                = "";
+    $scope.showSidebar          = false;
     $scope.suggestionsVisible   = false;
     $scope.options              = {};
-
 
 
     // Get current coords & load map
@@ -61,7 +61,7 @@
         api.getPlaces($scope.Url).then(function (data) {
 
             $scope.suggestions = data.response.venues
-            console.log($scope.suggestions)
+            //console.log($scope.suggestions)
 
             $scope.options = {
 
@@ -70,7 +70,7 @@
                 address : $scope.suggestions[0].location.formattedAddress[0],
                 lat : $scope.suggestions[0].location.lat,
                 lng : $scope.suggestions[0].location.lng,
-                url : $scope.suggestions[0].url
+                //url : $scope.suggestions[0].url
 
                 // The above fails to update if no keyup has been pressed - will fix
 

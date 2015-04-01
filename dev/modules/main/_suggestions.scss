@@ -1,14 +1,15 @@
 
 
-.location-suggestions {
+
+.suggestions {
 
 	position: absolute;
-	background: $col-white;	
 	width: 300px;
 	top: $baseline;
 	left: 305px;
 	padding: $baseline;
 	@include box-shadow(1px 1px 5px 1px $col-grey);
+	background: $col-white;	
 
 	&:before {
 

@@ -373,19 +373,16 @@ blockquote:after {
   content: close-quote;
 }
 
-/* line 23, ../../dev/sass/partials/globals/_forms.scss */
+/* line 22, ../../dev/sass/partials/globals/_forms.scss */
 .btn,
 input,
 button,
 select,
 textarea {
   margin-bottom: 10px;
-  -moz-border-radius: 0;
-  -webkit-border-radius: 0;
-  border-radius: 0;
   border: 1px solid #c9c9c9;
 }
-/* line 36, ../../dev/sass/partials/globals/_forms.scss */
+/* line 34, ../../dev/sass/partials/globals/_forms.scss */
 .btn:focus,
 input:focus,
 button:focus,
@@ -394,7 +391,7 @@ textarea:focus {
   outline: none;
 }
 
-/* line 45, ../../dev/sass/partials/globals/_forms.scss */
+/* line 43, ../../dev/sass/partials/globals/_forms.scss */
 input[type="text"], select,
 textarea,
 input[type="date"],
@@ -408,26 +405,28 @@ input[type="password"] {
   padding: 10px;
 }
 
-/* line 59, ../../dev/sass/partials/globals/_forms.scss */
+/* line 57, ../../dev/sass/partials/globals/_forms.scss */
 select,
 textarea {
   display: block;
 }
 
-/* line 67, ../../dev/sass/partials/globals/_forms.scss */
+/* line 65, ../../dev/sass/partials/globals/_forms.scss */
 textarea {
   resize: vertical;
   min-height: 260px;
 }
 
-/* line 74, ../../dev/sass/partials/globals/_forms.scss */
+/* line 72, ../../dev/sass/partials/globals/_forms.scss */
 .btn,
 button,
 input[type="submit"] {
   border: none;
   width: auto;
-  padding: 5px 10px;
-  background: #17ad8a;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  background: #2b78c4;
   color: white;
   display: inline-block;
 }
@@ -474,18 +473,23 @@ input[type="submit"]:hover {
   display: block;
 }
 
-/* line 10, ../../dev/sass/partials/globals/_links.scss */
+/* line 11, ../../dev/sass/partials/globals/_links.scss */
 a {
   text-decoration: none;
-  color: #17ad8a;
+  color: #2b78c4;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
-/* line 19, ../../dev/sass/partials/globals/_links.scss */
+/* line 21, ../../dev/sass/partials/globals/_links.scss */
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  color: #d13e36;
 }
-/* line 25, ../../dev/sass/partials/globals/_links.scss */
+/* line 29, ../../dev/sass/partials/globals/_links.scss */
 a:active {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* line 6, ../../dev/sass/partials/globals/_lists.scss */
@@ -514,75 +518,53 @@ table th, table td {
   width: 25%;
 }
 
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local("Open Sans"), local("OpenSans"), url(http://themes.googleusercontent.com/static/fonts/opensans/v8/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff) format("woff");
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: local("Open Sans Semibold"), local("OpenSans-Semibold"), url(http://themes.googleusercontent.com/static/fonts/opensans/v8/MTP_ySUJH_bn48VBG8sNSnhCUOGz7vYGh680lGh-uXM.woff) format("woff");
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 800;
-  src: local("Open Sans Extrabold"), local("OpenSans-Extrabold"), url(http://themes.googleusercontent.com/static/fonts/opensans/v8/EInbV5DfGHOiMmvb1Xr-hnhCUOGz7vYGh680lGh-uXM.woff) format("woff");
-}
-/* line 27, ../../dev/sass/mixins/_font-face.scss */
-.open-sans, body, input, textarea, select, button, label {
-  font-family: "Open Sans", sans-serif;
-}
-
-/* line 10, ../../dev/sass/partials/globals/_typography.scss */
+/* line 7, ../../dev/sass/partials/globals/_typography.scss */
 html {
   font-size: 100%;
 }
 
-/* line 16, ../../dev/sass/partials/globals/_typography.scss */
+/* line 13, ../../dev/sass/partials/globals/_typography.scss */
 h1, h2, h3, h4, h5, h6, p {
   margin-bottom: 10px;
 }
 
-/* line 22, ../../dev/sass/partials/globals/_typography.scss */
+/* line 19, ../../dev/sass/partials/globals/_typography.scss */
 body, input, textarea, select, button, p, a {
   font-size: 16px;
   font-size: 1em;
   line-height: 24px;
+  font-family: 'Arimo', arial, sans-serif;
 }
 
-/* line 28, ../../dev/sass/partials/globals/_typography.scss */
+/* line 26, ../../dev/sass/partials/globals/_typography.scss */
 h1, .h1, .alpha {
   font-size: 48px;
   font-size: 3em;
   line-height: 72px;
 }
 
-/* line 34, ../../dev/sass/partials/globals/_typography.scss */
+/* line 32, ../../dev/sass/partials/globals/_typography.scss */
 h2, .h2, .beta {
   font-size: 32px;
   font-size: 2em;
   line-height: 48px;
 }
 
-/* line 40, ../../dev/sass/partials/globals/_typography.scss */
+/* line 38, ../../dev/sass/partials/globals/_typography.scss */
 h3, .h3, .gamma {
   font-size: 24px;
   font-size: 1.5em;
   line-height: 36px;
 }
 
-/* line 46, ../../dev/sass/partials/globals/_typography.scss */
+/* line 44, ../../dev/sass/partials/globals/_typography.scss */
 h4, .h4, .delta {
   font-size: 22px;
   font-size: 1.375em;
   line-height: 33px;
 }
 
-/* line 52, ../../dev/sass/partials/globals/_typography.scss */
+/* line 50, ../../dev/sass/partials/globals/_typography.scss */
 h5, .h5, .epsilon,
 h6, .h6, .zeta {
   font-size: 18px;
@@ -590,14 +572,14 @@ h6, .h6, .zeta {
   line-height: 27px;
 }
 
-/* line 59, ../../dev/sass/partials/globals/_typography.scss */
+/* line 57, ../../dev/sass/partials/globals/_typography.scss */
 .mega {
   font-size: 72px;
   font-size: 4.5em;
   line-height: 108px;
 }
 
-/* line 65, ../../dev/sass/partials/globals/_typography.scss */
+/* line 63, ../../dev/sass/partials/globals/_typography.scss */
 small,
 .tiny {
   font-size: 14px;
@@ -605,12 +587,12 @@ small,
   line-height: 21px;
 }
 
-/* line 72, ../../dev/sass/partials/globals/_typography.scss */
+/* line 70, ../../dev/sass/partials/globals/_typography.scss */
 strong {
   font-weight: bold;
 }
 
-/* line 78, ../../dev/sass/partials/globals/_typography.scss */
+/* line 76, ../../dev/sass/partials/globals/_typography.scss */
 em {
   font-style: italic;
 }
@@ -618,10 +600,18 @@ em {
 /* line 5, ../../dev/sass/partials/modules/_app-main.scss */
 .app-main {
   width: 100%;
+  position: relative;
 }
-/* line 9, ../../dev/sass/partials/modules/_app-main.scss */
+/* line 10, ../../dev/sass/partials/modules/_app-main.scss */
 .app-main .logged-in {
   width: 100%;
+}
+/* line 16, ../../dev/sass/partials/modules/_app-main.scss */
+.app-main .reveal-map {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 999999;
 }
 
 /* line 3, ../../dev/modules/main/_sidebar.scss */
@@ -629,17 +619,40 @@ em {
   width: 300px;
   position: fixed;
   top: 0;
-  left: 0;
+  left: -300px;
   bottom: 0;
-  background: #e6e6e6;
-  padding: 20px;
+  background: #222222;
   z-index: 111;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  z-index: 888888;
+}
+/* line 15, ../../dev/modules/main/_sidebar.scss */
+.sidebar.active {
+  left: 0;
+}
+/* line 21, ../../dev/modules/main/_sidebar.scss */
+.sidebar .filter-add {
+  padding: 20px;
+}
+/* line 29, ../../dev/modules/main/_sidebar.scss */
+.sidebar .places li {
+  position: relative;
+  padding: 10px 20px;
+  border-bottom: 1px solid #333333;
+  color: white;
+}
+/* line 36, ../../dev/modules/main/_sidebar.scss */
+.sidebar .places li .remove-place {
+  position: absolute;
+  right: 20px;
 }
 
-/* line 3, ../../dev/modules/main/_suggestions.scss */
-.location-suggestions {
+/* line 4, ../../dev/modules/main/_suggestions.scss */
+.suggestions {
   position: absolute;
-  background: white;
   width: 300px;
   top: 20px;
   left: 305px;
@@ -647,9 +660,10 @@ em {
   -moz-box-shadow: 1px 1px 5px 1px #c9c9c9;
   -webkit-box-shadow: 1px 1px 5px 1px #c9c9c9;
   box-shadow: 1px 1px 5px 1px #c9c9c9;
+  background: white;
 }
-/* line 13, ../../dev/modules/main/_suggestions.scss */
-.location-suggestions:before {
+/* line 14, ../../dev/modules/main/_suggestions.scss */
+.suggestions:before {
   content: '';
   position: absolute;
   top: 13.33333px;

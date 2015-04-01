@@ -4,9 +4,6 @@
 // ============================================================
 // For font face imports, see font-face mixin
 
-
-@include open-sans(body input textarea select button label);	
-
 html {
 
 	  font-size: 100%;
@@ -22,6 +19,7 @@ h1, h2, h3, h4, h5, h6, p {
 body, input, textarea, select, button, p, a {
 
     @include font(16);
+    font-family: 'Arimo', arial, sans-serif;
 
 }
 

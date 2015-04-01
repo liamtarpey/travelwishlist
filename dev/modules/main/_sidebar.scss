@@ -5,11 +5,46 @@
 	width: 300px;
 	position: fixed;
 	top: 0;
-	left: 0;
+	left: -300px;
 	bottom: 0;
-	background: $col-lightgrey;
-	padding: $baseline;
+	background: $col-black;
 	z-index: 111;
+	@include transition(all .3s ease-in-out);
+	z-index: 888888;
+
+	&.active {
+
+		left: 0;
+
+	}
+
+	.filter-add {
+
+		padding: $baseline;
+
+	}
+
+	.places {
+
+		li {
+
+			position: relative;
+			padding: $baseline/2 $baseline;
+			border-bottom: 1px solid $col-lightblack;
+			color: $col-white;
+
+			.remove-place {
+
+				position: absolute;
+				right: $baseline;
+
+			}
+
+		}
+
+	}
+
+	
 
 }
 

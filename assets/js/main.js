@@ -27452,29 +27452,19 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
 	        	ele.bind('click', function() {
      		
-
 	        		authService.firebaseRef.child("places").push(
 
 				    	scope.params
+				    	
 
-				    )
+				    );
+
+				    scope.showSearch = false;
+
+	        		// below not working?
+	        		//scope.showSearch = false
 
 	        	})
-
-	    	}
-
-	  	}
-
-	});
-
-
-	app.directive('googleplace', function() {
-
-		return {
-
-	    	link: function(scope, element, attr) {
-
-	        	//scope.gPlace = new google.maps.places.Autocomplete(element[0]);
 
 	    	}
 
@@ -27588,9 +27578,9 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
     // Variables
     $scope.field                = "";
+    $scope.showSidebar          = false;
     $scope.suggestionsVisible   = false;
     $scope.options              = {};
-
 
 
     // Get current coords & load map
@@ -27633,7 +27623,7 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
         api.getPlaces($scope.Url).then(function (data) {
 
             $scope.suggestions = data.response.venues
-            console.log($scope.suggestions)
+            //console.log($scope.suggestions)
 
             $scope.options = {
 
@@ -27642,9 +27632,9 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
                 address : $scope.suggestions[0].location.formattedAddress[0],
                 lat : $scope.suggestions[0].location.lat,
                 lng : $scope.suggestions[0].location.lng,
-                url : $scope.suggestions[0].url
+                //url : $scope.suggestions[0].url
 
-                // The above fails to update if no keyup has been pressed
+                // The above fails to update if no keyup has been pressed - will fix
 
             };       
 
