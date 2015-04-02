@@ -27459,8 +27459,6 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
 				    );
 
-				    scope.showSearch = false;
-
 	        		// below not working?
 	        		//scope.showSearch = false
 

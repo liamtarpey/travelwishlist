@@ -20,8 +20,6 @@
 
 				    );
 
-				    scope.showSearch = false;
-
 	        		// below not working?
 	        		//scope.showSearch = false
 
