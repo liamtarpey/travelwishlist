@@ -27618,14 +27618,15 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
       authService.firebaseRef.child("places").push(objOptions);
       $scope.showSearch = false
+      console.log($scope.showSearch)
 
     }
 
-    $scope.hideSuggestions = function() {
+    // $scope.hideSuggestions = function() {
 
-      $scope.suggestionsVisible = false;
+    //   $scope.suggestionsVisible = false;
 
-    }
+    // }
 
     //Remove entry from Firebase
     $scope.removeEntry = function(index) {
