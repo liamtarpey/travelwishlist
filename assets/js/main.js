@@ -27438,40 +27438,6 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
 	});
 
-	app.directive('addToFirebase', function(authService) {
-
-		return {
-
-			scope : {
-
-	        	params : '=addToFirebase',
-	        	index : "=dataIndex"
-
-	        },
-	        
-	    	link: function(scope, ele, attr) {
-
-	        	ele.bind('click', function() {
-     		
-	        		authService.firebaseRef.child("places").push(
-
-				    	scope.params
-				    	
-
-				    );
-
-	        		// below not working?
-	        		//scope.showSearch = false
-
-	        	})
-
-	    	}
-
-	  	}
-
-	});
-
-
 
 	app.directive('removeFromFirebase', function() {
 
@@ -27610,8 +27576,10 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
     });
 
+  // =====================================
+  // Suggest location using Foursquare API
+  // =====================================
 
-    // Suggest place with Foursquare API call
     $scope.suggestEntry = function(val) {
 
         $scope.suggestionsVisible = true;
@@ -27622,15 +27590,17 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
         api.getPlaces($scope.Url).then(function (data) {
 
             $scope.suggestions = data.response.venues;
-            //console.log($scope.suggestions)
-
             
         });
 
-        // Clear input after submit
-       //$scope.field = "";
+      // Clear input after submit
+      //$scope.field = "";
 
     }
+
+  // =========================
+  // Add selection to Firebase
+  // =========================
 
     $scope.addToFirebase = function(index) {
 
@@ -27647,6 +27617,7 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
       };       
 
       authService.firebaseRef.child("places").push(objOptions);
+      $scope.showSearch = false
 
     }
 
@@ -27659,7 +27630,6 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
     //Remove entry from Firebase
     $scope.removeEntry = function(index) {
 
-      //console.log(place)
       authService.firebaseRef.child("places").remove();   
 
     }

@@ -49,8 +49,10 @@
 
     });
 
+  // =====================================
+  // Suggest location using Foursquare API
+  // =====================================
 
-    // Suggest place with Foursquare API call
     $scope.suggestEntry = function(val) {
 
         $scope.suggestionsVisible = true;
@@ -61,15 +63,17 @@
         api.getPlaces($scope.Url).then(function (data) {
 
             $scope.suggestions = data.response.venues;
-            //console.log($scope.suggestions)
-
             
         });
 
-        // Clear input after submit
-       //$scope.field = "";
+      // Clear input after submit
+      //$scope.field = "";
 
     }
+
+  // =========================
+  // Add selection to Firebase
+  // =========================
 
     $scope.addToFirebase = function(index) {
 
@@ -86,6 +90,7 @@
       };       
 
       authService.firebaseRef.child("places").push(objOptions);
+      $scope.showSearch = false
 
     }
 
@@ -98,7 +103,6 @@
     //Remove entry from Firebase
     $scope.removeEntry = function(index) {
 
-      //console.log(place)
       authService.firebaseRef.child("places").remove();   
 
     }
