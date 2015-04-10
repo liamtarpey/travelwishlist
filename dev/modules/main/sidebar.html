@@ -11,7 +11,7 @@
 	    <ul class="places">
 	        <li ng-repeat="place in data.places | filter: filterResults">
 	            <span ng-bind-html="place.name"></span>
-	            <a ng-href="javascript:;" class="remove-place" ng-click="removeEntry($index)">X</a>
+	            <a ng-href="javascript:;" class="remove-place" ng-click="data.places.$remove(place)">X</a>
 	        </li>
 	    </ul>
 
