@@ -4,7 +4,7 @@
 	</form>
 	<ul class="location-suggestions" ng-show="suggestionsVisible">
 		<li ng-repeat="suggestion in suggestions | limitTo:5 ">
-	        <a href="javascript:;" add-to-firebase="options">
+	        <a href="javascript:;" ng-click="addToFirebase($index)">
 	    		<span ng-bind-html="suggestion.name"></span>
 	            <span ng-bind-html="suggestion.location.postalCode"></span>
 	        </a>

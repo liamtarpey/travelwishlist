@@ -27444,7 +27444,8 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
 			scope : {
 
-	        	params : '=addToFirebase'
+	        	params : '=addToFirebase',
+	        	index : "=dataIndex"
 
 	        },
 	        
@@ -27597,11 +27598,11 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
     // Get JSON from firebase
     authService.firebaseRef.on("value", function(place) {
 
-        $scope.$apply(function() {
+        // $scope.$apply(function() {
 
             $scope.data = place.val();
 
-        })
+        // })
 
     }, function (errorObject) {
 
@@ -27613,29 +27614,17 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
     // Suggest place with Foursquare API call
     $scope.suggestEntry = function(val) {
 
-        $scope.suggestionsVisible = true
+        $scope.suggestionsVisible = true;
 
-        $scope.Url = fourSquareBase + '&ll=' + $scope.coords.lat + ',' + $scope.coords.lng + '&query=' + val
+        $scope.Url = fourSquareBase + '&ll=' + $scope.coords.lat + ',' + $scope.coords.lng + '&query=' + val;
 
         // Foursquare API call
         api.getPlaces($scope.Url).then(function (data) {
 
-            $scope.suggestions = data.response.venues
+            $scope.suggestions = data.response.venues;
             //console.log($scope.suggestions)
 
-            $scope.options = {
-
-                name : $scope.suggestions[0].name,
-                checkins : $scope.suggestions[0].stats.checkinsCount,
-                address : $scope.suggestions[0].location.formattedAddress[0],
-                lat : $scope.suggestions[0].location.lat,
-                lng : $scope.suggestions[0].location.lng,
-                //url : $scope.suggestions[0].url
-
-                // The above fails to update if no keyup has been pressed - will fix
-
-            };       
-
+            
         });
 
         // Clear input after submit
@@ -27643,17 +27632,35 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
     }
 
+    $scope.addToFirebase = function(index) {
+
+      var objAddress = (!$scope.suggestions[index].location.formattedAddress[index]) ? "" : $scope.suggestions[index].location.formattedAddress[index],
+          objOptions = {
+
+          name : $scope.suggestions[index].name,
+          checkins : $scope.suggestions[index].stats.checkinsCount,
+          address : objAddress,
+          lat : $scope.suggestions[index].location.lat,
+          lng : $scope.suggestions[index].location.lng,
+          //url : $scope.suggestions[index].url
+
+      };       
+
+      authService.firebaseRef.child("places").push(objOptions);
+
+    }
+
     $scope.hideSuggestions = function() {
 
-      $scope.suggestionsVisible = false
+      $scope.suggestionsVisible = false;
 
     }
 
     //Remove entry from Firebase
-    $scope.removeEntry = function() {
+    $scope.removeEntry = function(index) {
 
       //console.log(place)
-      authService.firebaseRef.child("places").remove()      
+      authService.firebaseRef.child("places").remove();   
 
     }
 

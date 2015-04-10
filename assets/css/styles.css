@@ -674,6 +674,15 @@ em {
   border-bottom: 20px solid transparent;
   border-right: 20px solid white;
 }
+/* line 28, ../../dev/modules/main/_suggestions.scss */
+.suggestions input[type="text"], .suggestions select,
+.suggestions textarea {
+  margin-bottom: 0;
+}
+/* line 34, ../../dev/modules/main/_suggestions.scss */
+.suggestions .location-suggestions {
+  margin: 20px 0 0 0;
+}
 
 /* line 3, ../../dev/modules/main/_map.scss */
 .angular-mapbox-map {

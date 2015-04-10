@@ -5,7 +5,8 @@
 
 			scope : {
 
-	        	params : '=addToFirebase'
+	        	params : '=addToFirebase',
+	        	index : "=dataIndex"
 
 	        },
 	        
