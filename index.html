@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="assets/css/styles.css"/>
 
         <!-- Place css in SASS partial to avoid extra http request -->
-        <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+        <!-- <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' /> -->
 
     </head>
     <body>
@@ -27,7 +27,9 @@
 
                 <mapbox map-id="liamtarpey.le3488c3" ng-if="coords" lat="{{coords.lat}}" lng="{{coords.lng}}" scale-to-fit="all">
                     <marker ng-repeat="place in data.places | filter: filterResults" lat="{{place.lat}}" lng="{{place.lng}}">
-                        <h1>TEST</h1>
+                        <h4 ng-bind-html="place.name"></h4>
+                        <p>Checkins: {{place.checkins}}</p>
+                        <p ng-bind-html="place.address" ng-if="place.address"></p>
                     </marker>
                 </mapbox>
 

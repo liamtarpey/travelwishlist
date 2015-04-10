@@ -10,7 +10,7 @@ html {
 
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1, h2, h3, h5, h6, p {
 
 	  margin-bottom: $baseline/2;
 
@@ -31,19 +31,19 @@ h1, .h1, .alpha {
 
 h2, .h2, .beta {
 
-    @include font(32);
+    @include font(38);
 
 }
 
 h3, .h3, .gamma {
 
-    @include font(24);
+    @include font(30);
 
 }
 
 h4, .h4, .delta {
 
-    @include font(22);
+    @include font(26);
 
 }
 
