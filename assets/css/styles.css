@@ -403,56 +403,67 @@ input[type="password"] {
   width: 100%;
   max-width: 480px;
   padding: 10px;
+  border: none;
+  border-bottom: 2px solid #222222;
 }
 
-/* line 57, ../../dev/sass/partials/globals/_forms.scss */
+/* line 59, ../../dev/sass/partials/globals/_forms.scss */
 select,
 textarea {
   display: block;
 }
 
-/* line 65, ../../dev/sass/partials/globals/_forms.scss */
+/* line 67, ../../dev/sass/partials/globals/_forms.scss */
 textarea {
   resize: vertical;
   min-height: 260px;
 }
 
-/* line 72, ../../dev/sass/partials/globals/_forms.scss */
+/* line 74, ../../dev/sass/partials/globals/_forms.scss */
 .btn,
 button,
 input[type="submit"] {
   border: none;
   width: auto;
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  background: #2b78c4;
-  color: white;
+  width: 44px;
+  height: 44px;
+  background: #222222;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
   display: inline-block;
+  background-image: url(../img/sprite.png);
+  background-repeat: no-repeat;
+  background-size: 40px 83px;
+  text-indent: -9999999px;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  background-position: center 2px;
 }
-/* line 85, ../../dev/sass/partials/globals/_forms.scss */
-.btn:hover,
-button:hover,
-input[type="submit"]:hover {
-  color: white;
-  background: #d13e36;
+/* line 92, ../../dev/sass/partials/globals/_forms.scss */
+.btn.active,
+button.active,
+input[type="submit"].active {
+  background-position: center -41px;
   text-decoration: none;
 }
-/* line 93, ../../dev/sass/partials/globals/_forms.scss */
+/* line 99, ../../dev/sass/partials/globals/_forms.scss */
 .btn.secondary,
 button.secondary,
 input[type="submit"].secondary {
   background: #2b78c4;
   color: white;
 }
-/* line 98, ../../dev/sass/partials/globals/_forms.scss */
+/* line 104, ../../dev/sass/partials/globals/_forms.scss */
 .btn.secondary:hover,
 button.secondary:hover,
 input[type="submit"].secondary:hover {
   color: white;
   background: #c4c416;
 }
-/* line 107, ../../dev/sass/partials/globals/_forms.scss */
+/* line 113, ../../dev/sass/partials/globals/_forms.scss */
 .btn:hover,
 button:hover,
 input[type="submit"]:hover {
@@ -476,7 +487,7 @@ input[type="submit"]:hover {
 /* line 11, ../../dev/sass/partials/globals/_links.scss */
 a {
   text-decoration: none;
-  color: #2b78c4;
+  color: #222222;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
@@ -1710,6 +1721,7 @@ em {
 .sidebar .places li .remove-place {
   position: absolute;
   right: 20px;
+  color: #d13e36;
 }
 
 /* line 4, ../../dev/modules/main/_suggestions.scss */

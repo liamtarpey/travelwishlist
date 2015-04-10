@@ -23,7 +23,7 @@
 
                 <div ng-include="'/includes/sidebar.html'"></div>
 
-                <button ng-click="showSidebar = !showSidebar" class="reveal-map">+</button>
+                <button ng-click="showSidebar = !showSidebar" class="reveal-map" ng-class="{active:showSearch}">+</button>
 
                 <mapbox map-id="liamtarpey.le3488c3" ng-if="coords" lat="{{coords.lat}}" lng="{{coords.lng}}" scale-to-fit="all">
                     <marker ng-repeat="place in data.places | filter: filterResults" lat="{{place.lat}}" lng="{{place.lng}}">

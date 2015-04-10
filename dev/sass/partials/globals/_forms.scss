@@ -51,6 +51,8 @@ input[type="password"] {
 	width: 100%;
 	max-width: $inputMaxWidth;
 	padding: $baseline/2;
+	border: none;
+	border-bottom: 2px solid $col-black;
 
 }
 
@@ -75,17 +77,21 @@ input[type="submit"] {
 
 	border: none;
 	width: auto;
-	width: 40px;
-	height: 40px;
-	text-align: center;
-	background: $primaryBtnBg;
-	color: $primaryBtnCol;
+	width: 44px;
+	height: 44px;
+	background: $col-black;
+	@include border-radius(50%);
 	display: inline-block;
+	background-image: url(../img/sprite.png);
+	background-repeat: no-repeat;
+	background-size: 40px 83px;
+	text-indent: -9999999px;
+	@include transition(all .4s ease-in-out);
+	background-position: center 2px;
 
-	&:hover {
+	&.active {
 
-		color: $primaryBtnColHover;
-		background: $primaryBtnBgHover;
+		background-position: center -41px;		
 		text-decoration: none;
 
 	}

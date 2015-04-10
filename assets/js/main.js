@@ -27542,6 +27542,7 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
 
     // Variables
+    var idArray                 = [];
     $scope.field                = "";
     $scope.showSidebar          = false;
     $scope.suggestionsVisible   = false;
@@ -27566,7 +27567,14 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
         // $scope.$apply(function() {
 
-            $scope.data = place.val();
+        $scope.data = place.val();
+
+        for (something in $scope.data.places) {
+
+          idArray.push($scope.data.places[something].id);
+
+        }
+          
 
         // })
 
@@ -27602,25 +27610,37 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
   // Add selection to Firebase
   // =========================
 
+
     $scope.addToFirebase = function(index) {
 
-      var objAddress = (!$scope.suggestions[index].location.formattedAddress[index]) ? "" : $scope.suggestions[index].location.formattedAddress[index],
-          objOptions = {
+      // Check if ID exists in Array and if not push new object to Firebase
+      if (idArray.indexOf($scope.suggestions[index].id) == -1) {
 
-          name : $scope.suggestions[index].name,
-          checkins : $scope.suggestions[index].stats.checkinsCount,
-          address : objAddress,
-          lat : $scope.suggestions[index].location.lat,
-          lng : $scope.suggestions[index].location.lng,
-          //url : $scope.suggestions[index].url
+        var objAddress = (!$scope.suggestions[index].location.formattedAddress[index]) ? "" : $scope.suggestions[index].location.formattedAddress[index],
+            objOptions = {
 
-      };       
+              name : $scope.suggestions[index].name,
+              checkins : $scope.suggestions[index].stats.checkinsCount,
+              address : objAddress,
+              lat : $scope.suggestions[index].location.lat,
+              lng : $scope.suggestions[index].location.lng,
+              id : $scope.suggestions[index].id
+              //url : $scope.suggestions[index].url
 
-      authService.firebaseRef.child("places").push(objOptions);
-      $scope.showSearch = false
-      console.log($scope.showSearch)
+            };        
+
+        authService.firebaseRef.child("places").push(objOptions);
+        //$scope.showSearch = false
+        
+      } else {
+
+        console.log("derp")
+
+      }
 
     }
+
+    // }
 
     // $scope.hideSuggestions = function() {
 
