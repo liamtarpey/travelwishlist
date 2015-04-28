@@ -1609,35 +1609,35 @@ body, input, textarea, select, button, p, a {
   font-family: 'Arimo', arial, sans-serif;
 }
 
-/* line 26, ../../dev/sass/partials/globals/_typography.scss */
+/* line 25, ../../dev/sass/partials/globals/_typography.scss */
 h1, .h1, .alpha {
   font-size: 48px;
   font-size: 3em;
   line-height: 72px;
 }
 
-/* line 32, ../../dev/sass/partials/globals/_typography.scss */
+/* line 31, ../../dev/sass/partials/globals/_typography.scss */
 h2, .h2, .beta {
   font-size: 38px;
   font-size: 2.375em;
   line-height: 57px;
 }
 
-/* line 38, ../../dev/sass/partials/globals/_typography.scss */
+/* line 37, ../../dev/sass/partials/globals/_typography.scss */
 h3, .h3, .gamma {
   font-size: 30px;
   font-size: 1.875em;
   line-height: 45px;
 }
 
-/* line 44, ../../dev/sass/partials/globals/_typography.scss */
+/* line 43, ../../dev/sass/partials/globals/_typography.scss */
 h4, .h4, .delta {
   font-size: 26px;
   font-size: 1.625em;
   line-height: 39px;
 }
 
-/* line 50, ../../dev/sass/partials/globals/_typography.scss */
+/* line 49, ../../dev/sass/partials/globals/_typography.scss */
 h5, .h5, .epsilon,
 h6, .h6, .zeta {
   font-size: 18px;
@@ -1645,14 +1645,14 @@ h6, .h6, .zeta {
   line-height: 27px;
 }
 
-/* line 57, ../../dev/sass/partials/globals/_typography.scss */
+/* line 56, ../../dev/sass/partials/globals/_typography.scss */
 .mega {
   font-size: 72px;
   font-size: 4.5em;
   line-height: 108px;
 }
 
-/* line 63, ../../dev/sass/partials/globals/_typography.scss */
+/* line 62, ../../dev/sass/partials/globals/_typography.scss */
 small,
 .tiny {
   font-size: 14px;
@@ -1660,12 +1660,12 @@ small,
   line-height: 21px;
 }
 
-/* line 70, ../../dev/sass/partials/globals/_typography.scss */
+/* line 69, ../../dev/sass/partials/globals/_typography.scss */
 strong {
   font-weight: bold;
 }
 
-/* line 76, ../../dev/sass/partials/globals/_typography.scss */
+/* line 75, ../../dev/sass/partials/globals/_typography.scss */
 em {
   font-style: italic;
 }
@@ -1706,22 +1706,28 @@ em {
 .sidebar.active {
   left: 0;
 }
-/* line 21, ../../dev/modules/main/_sidebar.scss */
+/* line 20, ../../dev/modules/main/_sidebar.scss */
 .sidebar .filter-add {
   padding: 20px;
 }
-/* line 29, ../../dev/modules/main/_sidebar.scss */
+/* line 27, ../../dev/modules/main/_sidebar.scss */
 .sidebar .places li {
   position: relative;
   padding: 10px 20px;
   border-bottom: 1px solid #333333;
   color: white;
 }
-/* line 36, ../../dev/modules/main/_sidebar.scss */
+/* line 34, ../../dev/modules/main/_sidebar.scss */
 .sidebar .places li .remove-place {
   position: absolute;
   right: 20px;
   color: #d13e36;
+}
+/* line 43, ../../dev/modules/main/_sidebar.scss */
+.sidebar .sidebar-msg {
+  color: white;
+  display: block;
+  padding: 0 20px 20px 20px;
 }
 
 /* line 4, ../../dev/modules/main/_suggestions.scss */

@@ -8,11 +8,13 @@
 
 	    <div ng-include="'../includes/suggestions.html'"></div>
 
-	    <ul class="places">
-	        <li ng-repeat="place in data.places | filter: filterResults">
-	            <span ng-bind-html="place.name"></span>
-	            <a ng-href="javascript:;" class="remove-place" ng-click="data.places.$remove(place)">X</a>
+	    <ul class="places" ng-if="data.places">
+	        <li ng-repeat="(key, value) in data.places | filter: filterResults">
+	            <span ng-bind-html="value.name"></span>
+	            <a ng-href="javascript:;" class="remove-place" ng-click="removeEntry(key)">X</a>
 	        </li>
 	    </ul>
+
+	    <span ng-if="!data.places" class="sidebar-msg">Click above to add a place!</span>
 
 	</div>

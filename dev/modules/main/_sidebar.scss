@@ -15,13 +15,11 @@
 	&.active {
 
 		left: 0;
-
 	}
 
 	.filter-add {
 
 		padding: $baseline;
-
 	}
 
 	.places {
@@ -38,14 +36,16 @@
 				position: absolute;
 				right: $baseline;
 				color: $col-red;
-
 			}
-
 		}
-
 	}
 
-	
+	.sidebar-msg {
+
+		color: $col-white;
+		display: block;
+		padding: 0 $baseline $baseline $baseline;
+	}	
 
 }
 

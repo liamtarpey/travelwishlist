@@ -27540,14 +27540,12 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
     // Init mapbox 
     mapboxService.init({ accessToken: mapBoxToken });  
 
-
     // Variables
     var idArray                 = [];
     $scope.field                = "";
     $scope.showSidebar          = false;
     $scope.suggestionsVisible   = false;
     $scope.options              = {};
-
 
     // Get current coords & load map
     geolocation.getLocation().then(function(data){
@@ -27556,32 +27554,24 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
         lat: data.coords.latitude, 
         lng: data.coords.longitude
-
       };
-      
     }); 
 
     
     // Get JSON from firebase
     authService.firebaseRef.on("value", function(place) {
 
-        // $scope.$apply(function() {
-
         $scope.data = place.val();
+        console.log($scope.data)
 
         for (something in $scope.data.places) {
 
           idArray.push($scope.data.places[something].id);
-
         }
-          
-
-        // })
 
     }, function (errorObject) {
 
         console.log("The read failed: " + errorObject.code);
-
     });
 
   // =====================================
@@ -27598,7 +27588,6 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
         api.getPlaces($scope.Url).then(function (data) {
 
             $scope.suggestions = data.response.venues;
-            
         });
 
       // Clear input after submit
@@ -27635,7 +27624,6 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
       } else {
 
         console.log("derp")
-
       }
 
     }
@@ -27649,10 +27637,11 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
     // }
 
     //Remove entry from Firebase
-    $scope.removeEntry = function(index) {
+    $scope.removeEntry = function(placeId) {
 
-      authService.firebaseRef.child("places").remove();   
+      var placeToRemove = new Firebase("https://travel-wishlist.firebaseio.com/places/" + placeId);
 
+      placeToRemove.remove();
     }
 
   }]);
