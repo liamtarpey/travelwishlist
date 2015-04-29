@@ -1,12 +1,15 @@
-<div class="suggestions" ng-if="showSearch">
+<div class="suggestions" ng-class="{active:showSearch}">
 	<form ng-keyup="suggestEntry(field)">
 	    <input type="text" ng-model="field" placeholder="Search for places" />
 	</form>
 	<ul class="location-suggestions" ng-show="suggestionsVisible">
 		<li ng-repeat="suggestion in suggestions | limitTo:5 ">
 	        <a href="javascript:;" ng-click="addToFirebase($index)">
-	    		<span ng-bind-html="suggestion.name"></span>
-	            <span ng-bind-html="suggestion.location.postalCode"></span>
+	    		<span ng-bind-html="suggestion.name" class="suggestion-name"></span>
+	            <span class="suggestion-postcode">
+	            	<span ng-bind-html="suggestion.location.address"></span>
+	            	<span ng-bind-html="suggestion.location.postalCode"></span>
+	            </span>
 	        </a>
 		</li>
 	</ul>

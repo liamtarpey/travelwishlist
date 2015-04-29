@@ -404,7 +404,6 @@ input[type="password"] {
   max-width: 480px;
   padding: 10px;
   border: none;
-  border-bottom: 2px solid #222222;
 }
 
 /* line 59, ../../dev/sass/partials/globals/_forms.scss */
@@ -1679,7 +1678,7 @@ em {
 .app-main .logged-in {
   width: 100%;
 }
-/* line 16, ../../dev/sass/partials/modules/_app-main.scss */
+/* line 15, ../../dev/sass/partials/modules/_app-main.scss */
 .app-main .reveal-map {
   position: absolute;
   bottom: 10px;
@@ -1694,7 +1693,7 @@ em {
   top: 0;
   left: -300px;
   bottom: 0;
-  background: #222222;
+  background: url(../img/bg.png) repeat;
   z-index: 111;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -1729,20 +1728,39 @@ em {
   display: block;
   padding: 0 20px 20px 20px;
 }
+/* line 50, ../../dev/modules/main/_sidebar.scss */
+.sidebar .place-removed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background: white;
+  color: black;
+}
 
 /* line 4, ../../dev/modules/main/_suggestions.scss */
 .suggestions {
   position: absolute;
   width: 300px;
-  top: 20px;
+  top: -100%;
   left: 305px;
-  padding: 20px;
   -moz-box-shadow: 1px 1px 5px 1px #c9c9c9;
   -webkit-box-shadow: 1px 1px 5px 1px #c9c9c9;
   box-shadow: 1px 1px 5px 1px #c9c9c9;
   background: white;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 /* line 14, ../../dev/modules/main/_suggestions.scss */
+.suggestions.active {
+  top: 20px;
+}
+/* line 19, ../../dev/modules/main/_suggestions.scss */
 .suggestions:before {
   content: '';
   position: absolute;
@@ -1754,14 +1772,33 @@ em {
   border-bottom: 20px solid transparent;
   border-right: 20px solid white;
 }
-/* line 28, ../../dev/modules/main/_suggestions.scss */
+/* line 32, ../../dev/modules/main/_suggestions.scss */
 .suggestions input[type="text"], .suggestions select,
 .suggestions textarea {
   margin-bottom: 0;
+  line-height: 50px;
+  text-align: center;
 }
-/* line 34, ../../dev/modules/main/_suggestions.scss */
+/* line 39, ../../dev/modules/main/_suggestions.scss */
 .suggestions .location-suggestions {
-  margin: 20px 0 0 0;
+  margin: 0;
+}
+/* line 45, ../../dev/modules/main/_suggestions.scss */
+.suggestions .location-suggestions li:nth-child(odd) {
+  background: #f6f6f6;
+}
+/* line 50, ../../dev/modules/main/_suggestions.scss */
+.suggestions .location-suggestions li a {
+  padding: 6.66667px 20px;
+  display: block;
+}
+/* line 60, ../../dev/modules/main/_suggestions.scss */
+.suggestions .location-suggestions li a .suggestion-postcode {
+  display: block;
+  color: #c9c9c9;
+  font-size: 12px;
+  font-size: 0.75em;
+  line-height: 18px;
 }
 
 /* line 3, ../../dev/modules/main/_map.scss */

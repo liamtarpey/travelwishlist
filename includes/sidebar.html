@@ -2,7 +2,7 @@
 	<div class="sidebar" ng-class="{active:showSidebar}">
 
 	    <div class="filter-add">
-	    	<input type="text" placeholder="Filter results" ng-model="filterResults">
+	    	<!-- <input type="text" placeholder="Filter results" ng-model="filterResults"> -->
 	    	<button ng-click="showSearch = !showSearch" ng-class="{active:showSearch}">+</button>
 	    </div>
 
@@ -16,5 +16,6 @@
 	    </ul>
 
 	    <span ng-if="!data.places" class="sidebar-msg">Click above to add a place!</span>
+	    <span ng-show="placeRemoved" class="place-removed">Place removed! {{placeRemoved}}</span>
 
 	</div>

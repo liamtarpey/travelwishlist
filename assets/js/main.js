@@ -27415,15 +27415,12 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 				.success(function(data){
 
 					defer.resolve(data);
-
 		        })
 
 		        .error(function() { console.log("error with request") })
 
 		        return defer.promise 
-
 	    	}
-	    	
 	    }
 	    
 	}]);
@@ -27433,33 +27430,9 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 		return {
 
 			firebaseRef : new Firebase(fBaseUrl)
-
 		}  		
-
+		
 	});
-
-
-	app.directive('removeFromFirebase', function() {
-
-		return {
-
-			scope : {
-	        	name : '=removeFromFirebase'
-	        },
-	        
-	    	link: function(scope, ele, attr) {
-
-	        	ele.bind('click', function() {
-
-
-	        	})
-
-	    	}
-
-	  	}
-
-	});
-
 
   app.controller('register', ['$scope', '$http', '$firebase', function($scope, $http, $firebase) {
       
@@ -27562,7 +27535,7 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
     authService.firebaseRef.on("value", function(place) {
 
         $scope.data = place.val();
-        console.log($scope.data)
+        //console.log($scope.data)
 
         for (something in $scope.data.places) {
 
@@ -27588,11 +27561,11 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
         api.getPlaces($scope.Url).then(function (data) {
 
             $scope.suggestions = data.response.venues;
+            //console.log($scope.suggestions)
         });
 
       // Clear input after submit
       //$scope.field = "";
-
     }
 
   // =========================
@@ -27615,7 +27588,6 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
               lng : $scope.suggestions[index].location.lng,
               id : $scope.suggestions[index].id
               //url : $scope.suggestions[index].url
-
             };        
 
         authService.firebaseRef.child("places").push(objOptions);
@@ -27623,7 +27595,7 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
         
       } else {
 
-        console.log("derp")
+        alert("You have already added this place!")
       }
 
     }
@@ -27639,9 +27611,13 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
     //Remove entry from Firebase
     $scope.removeEntry = function(placeId) {
 
-      var placeToRemove = new Firebase("https://travel-wishlist.firebaseio.com/places/" + placeId);
+      var placeToRemove = new Firebase("https://travel-wishlist.firebaseio.com/places/" + placeId),
+          confirmation = confirm("Are you sure you wish to remove this place?");
 
-      placeToRemove.remove();
+      if(confirmation == true) {
+        
+        placeToRemove.remove()
+      }
     }
 
   }]);

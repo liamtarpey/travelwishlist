@@ -35,7 +35,7 @@
     authService.firebaseRef.on("value", function(place) {
 
         $scope.data = place.val();
-        console.log($scope.data)
+        //console.log($scope.data)
 
         for (something in $scope.data.places) {
 
@@ -61,11 +61,11 @@
         api.getPlaces($scope.Url).then(function (data) {
 
             $scope.suggestions = data.response.venues;
+            //console.log($scope.suggestions)
         });
 
       // Clear input after submit
       //$scope.field = "";
-
     }
 
   // =========================
@@ -88,7 +88,6 @@
               lng : $scope.suggestions[index].location.lng,
               id : $scope.suggestions[index].id
               //url : $scope.suggestions[index].url
-
             };        
 
         authService.firebaseRef.child("places").push(objOptions);
@@ -96,7 +95,7 @@
         
       } else {
 
-        console.log("derp")
+        alert("You have already added this place!")
       }
 
     }
@@ -112,9 +111,13 @@
     //Remove entry from Firebase
     $scope.removeEntry = function(placeId) {
 
-      var placeToRemove = new Firebase("https://travel-wishlist.firebaseio.com/places/" + placeId);
+      var placeToRemove = new Firebase("https://travel-wishlist.firebaseio.com/places/" + placeId),
+          confirmation = confirm("Are you sure you wish to remove this place?");
 
-      placeToRemove.remove();
+      if(confirmation == true) {
+        
+        placeToRemove.remove()
+      }
     }
 
   }]);

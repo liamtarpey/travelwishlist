@@ -5,11 +5,16 @@
 
 	position: absolute;
 	width: 300px;
-	top: $baseline;
+	top: -100%;
 	left: 305px;
-	padding: $baseline;
 	@include box-shadow(1px 1px 5px 1px $col-grey);
 	background: $col-white;	
+	@include transition(all .4s ease-in-out);
+
+	&.active {
+
+		top: $baseline;
+	}
 
 	&:before {
 
@@ -22,19 +27,43 @@
 		border-top: $baseline solid transparent;
 		border-bottom: $baseline solid transparent; 
 		border-right: $baseline solid $col-white; 
-
 	}
 
 	input[type="text"] {
 
 		margin-bottom: 0;
-
+		line-height: 50px;
+  		text-align: center;
 	}
 
 	.location-suggestions {
 
-		margin: $baseline 0 0 0;
+		margin: 0;
 
+		li {
+
+			&:nth-child(odd) {
+
+				background: $col-lightgrey;
+			}
+
+			a {
+
+				padding: $baseline/3 $baseline;
+				display: block;
+
+				.suggestion-name {
+
+
+				}
+
+				.suggestion-postcode {
+
+					display: block;
+					color: $col-grey;
+					@include font(12);
+				}
+			}			
+		}
 	}
-
 }

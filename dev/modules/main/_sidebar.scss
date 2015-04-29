@@ -7,7 +7,7 @@
 	top: 0;
 	left: -300px;
 	bottom: 0;
-	background: $col-black;
+	background: url(../img/bg.png) repeat;
 	z-index: 111;
 	@include transition(all .3s ease-in-out);
 	z-index: 888888;
@@ -47,5 +47,11 @@
 		padding: 0 $baseline $baseline $baseline;
 	}	
 
+	.place-removed {
+
+		@include centre;
+		background: white;
+		color: black;
+	}
 }
 

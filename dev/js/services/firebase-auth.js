@@ -4,7 +4,6 @@
 		return {
 
 			firebaseRef : new Firebase(fBaseUrl)
-
 		}  		
-
+		
 	});

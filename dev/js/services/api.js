@@ -13,15 +13,12 @@
 				.success(function(data){
 
 					defer.resolve(data);
-
 		        })
 
 		        .error(function() { console.log("error with request") })
 
 		        return defer.promise 
-
 	    	}
-	    	
 	    }
 	    
 	}]);
