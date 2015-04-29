@@ -1721,24 +1721,21 @@ em {
   position: absolute;
   right: 20px;
   color: #d13e36;
+  line-height: 20px;
 }
-/* line 43, ../../dev/modules/main/_sidebar.scss */
+/* line 44, ../../dev/modules/main/_sidebar.scss */
+.sidebar .place-name {
+  vertical-align: top;
+  line-height: 20px;
+  padding-left: 10px;
+  width: 80%;
+  display: inline-block;
+}
+/* line 53, ../../dev/modules/main/_sidebar.scss */
 .sidebar .sidebar-msg {
   color: white;
   display: block;
   padding: 0 20px 20px 20px;
-}
-/* line 50, ../../dev/modules/main/_sidebar.scss */
-.sidebar .place-removed {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  background: white;
-  color: black;
 }
 
 /* line 4, ../../dev/modules/main/_suggestions.scss */

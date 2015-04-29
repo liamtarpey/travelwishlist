@@ -10,12 +10,11 @@
 
 	    <ul class="places" ng-if="data.places">
 	        <li ng-repeat="(key, value) in data.places | filter: filterResults">
-	            <span ng-bind-html="value.name"></span>
+	        	<img ng-src="{{value.icon}}" alt="Icon for {{value.name}}" />
+	            <span ng-bind-html="value.name" class="place-name"></span>
 	            <a ng-href="javascript:;" class="remove-place" ng-click="removeEntry(key)">X</a>
 	        </li>
 	    </ul>
 
 	    <span ng-if="!data.places" class="sidebar-msg">Click above to add a place!</span>
-	    <span ng-show="placeRemoved" class="place-removed">Place removed! {{placeRemoved}}</span>
-
 	</div>

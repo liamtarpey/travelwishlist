@@ -27535,7 +27535,6 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
     authService.firebaseRef.on("value", function(place) {
 
         $scope.data = place.val();
-        //console.log($scope.data)
 
         for (something in $scope.data.places) {
 
@@ -27550,7 +27549,6 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
   // =====================================
   // Suggest location using Foursquare API
   // =====================================
-
     $scope.suggestEntry = function(val) {
 
         $scope.suggestionsVisible = true;
@@ -27561,18 +27559,15 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
         api.getPlaces($scope.Url).then(function (data) {
 
             $scope.suggestions = data.response.venues;
-            //console.log($scope.suggestions)
+            //$scope.icon = $scope.suggestions.categories.icon.prefix + "bg_64" + $scope.suggestions.categories.icon.suffix;
+            
+            //console.log($scope.icon)
         });
-
-      // Clear input after submit
-      //$scope.field = "";
     }
 
   // =========================
   // Add selection to Firebase
   // =========================
-
-
     $scope.addToFirebase = function(index) {
 
       // Check if ID exists in Array and if not push new object to Firebase
@@ -27586,7 +27581,8 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
               address : objAddress,
               lat : $scope.suggestions[index].location.lat,
               lng : $scope.suggestions[index].location.lng,
-              id : $scope.suggestions[index].id
+              id : $scope.suggestions[index].id,
+              icon : $scope.suggestions[index].categories[0].icon.prefix + "bg_32" + $scope.suggestions[index].categories[0].icon.suffix
               //url : $scope.suggestions[index].url
             };        
 
@@ -27600,14 +27596,6 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
 
     }
 
-    // }
-
-    // $scope.hideSuggestions = function() {
-
-    //   $scope.suggestionsVisible = false;
-
-    // }
-
     //Remove entry from Firebase
     $scope.removeEntry = function(placeId) {
 
@@ -27615,7 +27603,7 @@ app.constant('fourSquareBase', 'https://api.foursquare.com/v2/venues/search?clie
           confirmation = confirm("Are you sure you wish to remove this place?");
 
       if(confirmation == true) {
-        
+
         placeToRemove.remove()
       }
     }

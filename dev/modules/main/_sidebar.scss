@@ -36,8 +36,18 @@
 				position: absolute;
 				right: $baseline;
 				color: $col-red;
+				line-height: 20px;
 			}
 		}
+	}
+
+	.place-name {
+
+		vertical-align: top;
+		line-height: 20px;
+		padding-left: $baseline/2;
+		width: 80%;
+  		display: inline-block;
 	}
 
 	.sidebar-msg {
@@ -46,12 +56,5 @@
 		display: block;
 		padding: 0 $baseline $baseline $baseline;
 	}	
-
-	.place-removed {
-
-		@include centre;
-		background: white;
-		color: black;
-	}
 }
 
